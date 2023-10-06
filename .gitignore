@@ -2,9 +2,9 @@ _book/
 _bookdown_files/
 libs/
 **/*.bib
-**/*.html
+#**/*.html
 # ignore all html files except:
-!**/index.html
+#!**/index.html
 # R and Rstudio specific files
 .Rproj.user
 .Rhistory
