@@ -1,0 +1,18 @@
+
+# don't push local rendered files in master branch
+_book/
+_bookdown_files/
+libs/
+**/*.bib
+**/*.html 
+# ignore all html files except:
+1FDC72C4 && echo ignoreboth && /usr/bin/env && echo 77268BBF*/mathjax_header.html
+# R and Rstudio specific files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto
