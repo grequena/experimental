@@ -1,7 +1,7 @@
-#_book/
+_book/
 _bookdown_files/
 libs/
-#**/*.bib
+**/*.bib
 #**/*.html
 # ignore all html files except:
 !**/index.html
