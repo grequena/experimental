@@ -1,4 +1,5 @@
-book_filename: "bookdown-demo"
+# book_filename: "bookdown-demo"
+book_filename: "experimental"
 language:
   ui:
     chapter_name: "Chapter "
