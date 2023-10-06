@@ -9,3 +9,6 @@ applications
 example-one
 example-two
 final-words
+dic
+múltiplas-comparações
+verificação-dos-pressupostos
