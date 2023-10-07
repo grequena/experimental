@@ -15,11 +15,14 @@ Tal delineamento se dá quando os tratamentos (ou níveis de um fator) são dist
 Veremos adiante que há diferentes esquemas para se construir tratamentos, como em experimentos fatoriais e em parcelas subdivididas, porém, neste capítulo, trabalhamos apenas com um fator.
 
 ::: {.example}
-Temos $N=9$ sementes de feijão e $a=3$ níveis de irrigação (A, B, C) com o intuito de medir o peso em gramas da planta, após determinado tempo.
+Temos $N=9$ sementes de feijão e $a=3$ níveis de irrigação (A, B, C) e iremos medir o peso em gramas da planta, após determinado tempo.
 
-Podemos enumerar as sementes de 1 a 9 e sortear aleatoriamente os tratamentos.
+O DIC pode ser construido enumerando as sementes de 1 a 9 e sorteando aleatoriamente os tratamentos.
 
 É possível realizar este sorteio no R de diferentes maneiras. Uma delas é através da função `sample`.
+```{r, include=FALSE}
+set.seed(321)
+```
 ```{r, results='hide'}
 N=9 #n. de unidades experimentais
 a=3 #n. de tratamentos

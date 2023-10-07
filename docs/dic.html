@@ -173,8 +173,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Tal delineamento se dá quando os tratamentos (ou níveis de um fator) são distribuídos totalmente ao acaso dentre as unidades experimentais.</p>
 <p>Veremos adiante que há diferentes esquemas para se construir tratamentos, como em experimentos fatoriais e em parcelas subdivididas, porém, neste capítulo, trabalhamos apenas com um fator.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-1" class="example"><strong>Example 1.1  </strong></span>Temos <span class="math inline">\(N=9\)</span> sementes de feijão e <span class="math inline">\(a=3\)</span> níveis de irrigação (A, B, C) com o intuito de medir o peso em gramas da planta, após determinado tempo.</p>
-<p>Podemos enumerar as sementes de 1 a 9 e sortear aleatoriamente os tratamentos.</p>
+<p><span id="exm:unlabeled-div-1" class="example"><strong>Example 1.1  </strong></span>Temos <span class="math inline">\(N=9\)</span> sementes de feijão e <span class="math inline">\(a=3\)</span> níveis de irrigação (A, B, C) e iremos medir o peso em gramas da planta, após determinado tempo.</p>
+<p>O DIC pode ser construido enumerando as sementes de 1 a 9 e sorteando aleatoriamente os tratamentos.</p>
 <p>É possível realizar este sorteio no R de diferentes maneiras. Uma delas é através da função <code>sample</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="dic.html#cb1-1" aria-hidden="true" tabindex="-1"></a>N<span class="ot">=</span><span class="dv">9</span> <span class="co">#n. de unidades experimentais</span></span>
 <span id="cb1-2"><a href="dic.html#cb1-2" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span><span class="dv">3</span> <span class="co">#n. de tratamentos</span></span>
@@ -214,7 +214,7 @@ B
 3
 </td>
 <td style="text-align:center;">
-A
+B
 </td>
 </tr>
 <tr>
@@ -222,7 +222,7 @@ A
 4
 </td>
 <td style="text-align:center;">
-B
+A
 </td>
 </tr>
 <tr>
@@ -230,7 +230,7 @@ B
 5
 </td>
 <td style="text-align:center;">
-B
+A
 </td>
 </tr>
 <tr>
@@ -238,7 +238,7 @@ B
 6
 </td>
 <td style="text-align:center;">
-C
+A
 </td>
 </tr>
 <tr>
@@ -246,7 +246,7 @@ C
 7
 </td>
 <td style="text-align:center;">
-C
+B
 </td>
 </tr>
 <tr>
@@ -254,7 +254,7 @@ C
 8
 </td>
 <td style="text-align:center;">
-A
+C
 </td>
 </tr>
 <tr>
@@ -262,7 +262,7 @@ A
 9
 </td>
 <td style="text-align:center;">
-A
+C
 </td>
 </tr>
 </tbody>

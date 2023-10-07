@@ -14,7 +14,9 @@ description: "Aqui são encontradas algumas notas de aulas da disciplina MAF 261
 
 # Prefácio {-}
 
-<!-- git add . && git commit -m"publish" && git push origin master -->
+<!-- 
+git add . && git commit -m"update book" && git push origin master 
+-->
 
 Este é um livro com notas de aula da disciplina **MAF 261 - ESTATÍSTICA EXPERIMENTAL**, ministrada obrigatoriamente para os cursos de Agronomia e Engenharia de Alimentos da Universidade Federal de Viçosa - Campus Florestal.
 
