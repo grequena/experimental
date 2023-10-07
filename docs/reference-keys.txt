@@ -14,3 +14,4 @@ múltiplas-comparações
 verificação-dos-pressupostos
 exm:unlabeled-div-1
 anova
+section

@@ -12,6 +12,10 @@ github-repo: rstudio/bookdown-demo
 description: "Aqui são encontradas algumas notas de aulas da disciplina MAF 261 - ESTATÍSTICA EXPERIMENTAL ministrada na Universidade Federal de Viçosa Campus Florestal"
 ---
 
+# {-}
+
+![](/mnt/d/drive/4Projetos/Bookdown/bookdown-demo-main/_bookdown_files/experimental_files/figure-html/capa.png)
+
 # Prefácio {-}
 
 <!-- 
