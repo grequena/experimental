@@ -12,15 +12,13 @@ github-repo: rstudio/bookdown-demo
 description: "Aqui são encontradas algumas notas de aulas da disciplina MAF 261 - ESTATÍSTICA EXPERIMENTAL ministrada na Universidade Federal de Viçosa Campus Florestal"
 ---
 
-# {-}
-
-![](/mnt/d/drive/4Projetos/Bookdown/bookdown-demo-main/_bookdown_files/experimental_files/figure-html/capa.png)
-
 # Prefácio {-}
 
 <!-- 
 git add . && git commit -m"update book" && git push origin master 
 -->
+
+![](/mnt/d/drive/4Projetos/Bookdown/bookdown-demo-main/_bookdown_files/experimental_files/figure-html/capa.png)
 
 Este é um livro com notas de aula da disciplina **MAF 261 - ESTATÍSTICA EXPERIMENTAL**, ministrada obrigatoriamente para os cursos de Agronomia e Engenharia de Alimentos da Universidade Federal de Viçosa - Campus Florestal.
 
