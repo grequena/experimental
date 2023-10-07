@@ -10,7 +10,7 @@ library(tidyverse)
 
 O *delineamento inteiramente casualizado (DIC)*, como visto anteriormente, é preferido quando as unidades experimentais são homogêneas entre si em suas principais características.
 
-Tal delineamento se dá quando os tratamentos (ou níveis de um fator) são distribuídos totalmente ao acaso dentre as unidades experimentais.
+Tal delineamento se dá quando os tratamentos (ou níveis de um fator) são distribuídos **totalmente ao acaso** dentre as unidades experimentais.
 
 Veremos adiante que há diferentes esquemas para se construir tratamentos, como em experimentos fatoriais e em parcelas subdivididas, porém, neste capítulo, trabalhamos apenas com um fator.
 
