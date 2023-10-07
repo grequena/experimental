@@ -35,19 +35,50 @@ tab <- tibble("semente"=1:N, "tratamento"=sorteio)
 kable(tab, align='c')
 ```
 
+Neste exemplo, a pergunta que surge é: existe algum nível de irrigação (tratamento) que é melhor do que os demais? Em outras palavras: os tratamentos são diferentes entre si?
 
+Estatisticamente falando, estamos estabelecendo hipóteses nula e alternativa:
+\begin{align*}
+H_0: & \mu_1=\mu_2=\mu_3\\
+H_1: & \mu_1\neq \mu_2 \text{ ou }\mu_1\neq \mu_3 \text{ ou }\mu_2\neq \mu_3
+\end{align*}
+
+Sob alguns pressupostos, pode ser testada utilizando a **análise de variância**, denominada **ANOVA** (do inglês: **an**alysis **o**f **va**riance)
 :::
 
+<!-- ------------------------------------------------------------ -->
 
----------------------------------------------------------------------
+## ANOVA
 
-## Múltiplas Comparações 
+Suponha que temos:
 
-blablabla
+- $a$ tratamentos (ou níveis de um fator)
+- $n$ repetições em cada tratamento
+- $N=na$ unidades experimentais
+ou seja, estamos supondo que o DIC seja balanceado (mesmo número de repetições em cada tratamento)
 
-## Verificação dos Pressupostos
+### Modelo estatístico {-}
 
-blablabla
+Um modelo estatístico tem como objetivo descrever matematicamente um fenômeno aleatório do mundo real. Com isso, há suposições que são consideradas, uma vez que se trata de uma aproximação matemática da realidade.
+
+"A realidade é muito mais complexa do que qualquer modelo matemático."
+
+> O **modelo estatístico do DIC** é:
+\begin{equation}
+y_{ij}=\mu_i+\epsilon_{ij}
+\end{equation}
+em que:
+> 
+- $i$ é o índice do tratamento, variando em $1, 2, ..., a$
+- $j$ é o índice da repetição em cada tratamento, variando em $1, 2, ..., n$
+- $y_{ij}$ é a observação $j$ do tratamento $i$ da variável resposta $y$
+- $\mu_i$ é a média (populacional) do tratamento $i$
+- $\epsilon_{ij}$ é o  erro aleatório da observação $j$ do tratamento $i$ (incorpora todas as fontes de variação que vão além da variação entre os tratamentos)
+
+<!-- ------------------------------------------------------------ -->
+
+
+
 
 <!-- You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods). -->
 
