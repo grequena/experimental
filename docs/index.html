@@ -23,7 +23,7 @@
 <meta name="author" content="Guaraci Requena" />
 
 
-<meta name="date" content="2023-10-06" />
+<meta name="date" content="2023-10-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -79,21 +79,10 @@
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a></li>
 <li class="chapter" data-level="1" data-path="dic.html"><a href="dic.html"><i class="fa fa-check"></i><b>1</b> Delineamento Inteiramente Casualizado</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="dic.html"><a href="dic.html#múltiplas-comparações"><i class="fa fa-check"></i><b>1.1</b> Múltiplas Comparações</a></li>
-<li class="chapter" data-level="1.2" data-path="dic.html"><a href="dic.html#verificação-dos-pressupostos"><i class="fa fa-check"></i><b>1.2</b> Verificação dos Pressupostos</a></li>
+<li class="chapter" data-level="1.1" data-path="múltiplas-comparações.html"><a href="múltiplas-comparações.html"><i class="fa fa-check"></i><b>1.1</b> Múltiplas Comparações</a></li>
+<li class="chapter" data-level="1.2" data-path="verificação-dos-pressupostos.html"><a href="verificação-dos-pressupostos.html"><i class="fa fa-check"></i><b>1.2</b> Verificação dos Pressupostos</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>2</b> Literature</a></li>
-<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="methods.html"><a href="methods.html#math-example"><i class="fa fa-check"></i><b>3.1</b> math example</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>4</b> Applications</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>4.1</b> Example one</a></li>
-<li class="chapter" data-level="4.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>4.2</b> Example two</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>5</b> Final Words</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="" data-path="referências-bibliográficas.html"><a href="referências-bibliográficas.html"><i class="fa fa-check"></i>Referências bibliográficas</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -117,12 +106,15 @@
 <div id="header">
 <h1 class="title">Estatística Experimental</h1>
 <p class="author"><em>Guaraci Requena</em></p>
-<p class="date"><em>2023-10-06</em></p>
+<p class="date"><em>2023-10-07</em></p>
 </div>
 <div id="prefácio" class="section level1 unnumbered hasAnchor">
 <h1>Prefácio<a href="index.html#prefácio" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- git add . && git commit -m"publish" && git push origin master -->
 <p>Este é um livro com notas de aula da disciplina <strong>MAF 261 - ESTATÍSTICA EXPERIMENTAL</strong>, ministrada obrigatoriamente para os cursos de Agronomia e Engenharia de Alimentos da Universidade Federal de Viçosa - Campus Florestal.</p>
 <p>Este livro foi escrito em <strong>Markdown</strong> com uso do pacote <strong>bookdown</strong>. Para mais informações, visite <a href="https://bookdown.org">https://bookdown.org</a>.</p>
+<p>A ideia é que este texto sirva como um apoio ao estudante da disciplina de Estatística Experimental.</p>
+<p>Sugestões e correções são bem-vindas e podem ser enviadas no email <a href="mailto:requena@ufv.br" class="email">requena@ufv.br</a>.</p>
 <!-- This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$. -->
 <!-- The **bookdown** package can be installed from CRAN or Github: -->
 <!-- ```{r eval=FALSE} -->
@@ -161,15 +153,15 @@
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
+"github": true,
+"facebook": false,
+"twitter": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": {}
 },
 "fontsettings": {
 "theme": "white",
@@ -177,7 +169,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
+"link": "https://github.com/grequena/experimental/index.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -188,7 +180,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["experimental.pdf", "experimental.epub"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null
@@ -200,20 +192,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

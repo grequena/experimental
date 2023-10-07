@@ -1,7 +1,7 @@
-# Applications
+<!-- # Applications -->
 
-Some _significant_ applications are demonstrated in this chapter.
+<!-- Some _significant_ applications are demonstrated in this chapter. -->
 
-## Example one
+<!-- ## Example one -->
 
-## Example two
+<!-- ## Example two -->

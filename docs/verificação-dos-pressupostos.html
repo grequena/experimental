@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 1 Delineamento Inteiramente Casualizado | Estatística Experimental</title>
+  <title>1.2 Verificação dos Pressupostos | Estatística Experimental</title>
   <meta name="description" content="Aqui são encontradas algumas notas de aulas da disciplina MAF 261 - ESTATÍSTICA EXPERIMENTAL ministrada na Universidade Federal de Viçosa Campus Florestal" />
   <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 1 Delineamento Inteiramente Casualizado | Estatística Experimental" />
+  <meta property="og:title" content="1.2 Verificação dos Pressupostos | Estatística Experimental" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Aqui são encontradas algumas notas de aulas da disciplina MAF 261 - ESTATÍSTICA EXPERIMENTAL ministrada na Universidade Federal de Viçosa Campus Florestal" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 1 Delineamento Inteiramente Casualizado | Estatística Experimental" />
+  <meta name="twitter:title" content="1.2 Verificação dos Pressupostos | Estatística Experimental" />
   
   <meta name="twitter:description" content="Aqui são encontradas algumas notas de aulas da disciplina MAF 261 - ESTATÍSTICA EXPERIMENTAL ministrada na Universidade Federal de Viçosa Campus Florestal" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="múltiplas-comparações.html"/>
+<link rel="prev" href="múltiplas-comparações.html"/>
+<link rel="next" href="referências-bibliográficas.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -167,116 +167,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="dic" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">Capítulo 1</span> Delineamento Inteiramente Casualizado<a href="dic.html#dic" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>O <em>delineamento inteiramente casualizado (DIC)</em>, como visto anteriormente, é preferido quando as unidades experimentais são homogêneas entre si em suas principais características.</p>
-<p>Tal delineamento se dá quando os tratamentos (ou níveis de um fator) são distribuídos totalmente ao acaso dentre as unidades experimentais.</p>
-<p>Veremos adiante que há diferentes esquemas para se construir tratamentos, como em experimentos fatoriais e em parcelas subdivididas, porém, neste capítulo, trabalhamos apenas com um fator.</p>
-<div class="example">
-<p><span id="exm:unlabeled-div-1" class="example"><strong>Example 1.1  </strong></span>Temos <span class="math inline">\(N=9\)</span> sementes de feijão e <span class="math inline">\(a=3\)</span> níveis de irrigação (A, B, C) com o intuito de medir o peso em gramas da planta, após determinado tempo.</p>
-<p>Podemos enumerar as sementes de 1 a 9 e sortear aleatoriamente os tratamentos.</p>
-<p>É possível realizar este sorteio no R de diferentes maneiras. Uma delas é através da função <code>sample</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="dic.html#cb1-1" aria-hidden="true" tabindex="-1"></a>N<span class="ot">=</span><span class="dv">9</span> <span class="co">#n. de unidades experimentais</span></span>
-<span id="cb1-2"><a href="dic.html#cb1-2" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span><span class="dv">3</span> <span class="co">#n. de tratamentos</span></span>
-<span id="cb1-3"><a href="dic.html#cb1-3" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">3</span> <span class="co">#n. de repetições</span></span>
-<span id="cb1-4"><a href="dic.html#cb1-4" aria-hidden="true" tabindex="-1"></a>sorteio <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x=</span><span class="fu">rep</span>(LETTERS[<span class="dv">1</span><span class="sc">:</span>a],n), <span class="at">size=</span>N, <span class="at">replace=</span>F)</span>
-<span id="cb1-5"><a href="dic.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">data.frame</span>(<span class="st">&quot;semente&quot;</span><span class="ot">=</span><span class="dv">1</span><span class="sc">:</span>N,<span class="st">&quot;tratamento&quot;</span><span class="ot">=</span>sorteio))</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th style="text-align:center;">
-semente
-</th>
-<th style="text-align:center;">
-tratamento
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center;">
-1
-</td>
-<td style="text-align:center;">
-C
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-2
-</td>
-<td style="text-align:center;">
-B
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-3
-</td>
-<td style="text-align:center;">
-A
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-4
-</td>
-<td style="text-align:center;">
-B
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-5
-</td>
-<td style="text-align:center;">
-B
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-6
-</td>
-<td style="text-align:center;">
-C
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-7
-</td>
-<td style="text-align:center;">
-C
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-8
-</td>
-<td style="text-align:center;">
-A
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-9
-</td>
-<td style="text-align:center;">
-A
-</td>
-</tr>
-</tbody>
-</table>
+<div id="verificação-dos-pressupostos" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Verificação dos Pressupostos<a href="verificação-dos-pressupostos.html#verificação-dos-pressupostos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>blablabla</p>
+<!-- You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods). -->
+<!-- Figures and tables with captions will be placed in `figure` and `table` environments, respectively. -->
+<!-- ```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'} -->
+<!-- par(mar = c(4, 4, .1, .1)) -->
+<!-- plot(pressure, type = 'b', pch = 19) -->
+<!-- ``` -->
+<!-- Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab). -->
+<!-- ```{r nice-tab, tidy=FALSE} -->
+<!-- knitr::kable( -->
+<!--   head(iris, 20), caption = 'Here is a nice table!', -->
+<!--   booktabs = TRUE -->
+<!-- ) -->
+<!-- ``` -->
+<!-- You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015]. -->
+
+<!-- # Literature -->
+<!-- Here is a review of existing methods. -->
+
+<!-- # Methods -->
+<!-- We describe our methods in this chapter. -->
+<!-- Math can be added in body using usual syntax like this  -->
+<!-- ## math example -->
+<!-- $p$ is unknown but expected to be around 1/3. Standard error will be approximated -->
+<!-- $$ -->
+<!-- SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027 -->
+<!-- $$ -->
+<!-- You can also use math in footnotes like this^[where we mention $p = \frac{a}{b}$]. -->
+<!-- We will approximate standard error to 0.027[^longnote] -->
+<!-- [^longnote]: $p$ is unknown but expected to be around 1/3. Standard error will be approximated -->
+<!--     $$ -->
+<!--     SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027 -->
+<!--     $$ -->
+
+<!-- # Applications -->
+<!-- Some _significant_ applications are demonstrated in this chapter. -->
+<!-- ## Example one -->
+<!-- ## Example two -->
+
+<!-- # Final Words -->
+<!-- We have finished a nice book. -->
+
 </div>
-<hr />
-</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="múltiplas-comparações.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="múltiplas-comparações.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="referências-bibliográficas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
