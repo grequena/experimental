@@ -15,3 +15,5 @@ verificação-dos-pressupostos
 exm:unlabeled-div-1
 anova
 section
+exm:unlabeled-div-2
+pressupostos-do-modelo

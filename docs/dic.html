@@ -23,7 +23,7 @@
 <meta name="author" content="Guaraci Requena" />
 
 
-<meta name="date" content="2023-10-07" />
+<meta name="date" content="2023-10-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -145,7 +145,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="1.1" data-path="anova.html"><a href="anova.html"><i class="fa fa-check"></i><b>1.1</b> ANOVA</a>
 <ul>
-<li class="chapter" data-level="" data-path="anova.html"><a href="anova.html#modelo-estatístico"><i class="fa fa-check"></i>Modelo estatístico</a></li>
+<li class="chapter" data-level="" data-path="anova.html"><a href="anova.html#modelo-estatístico-médias"><i class="fa fa-check"></i>Modelo estatístico (médias)</a></li>
+<li class="chapter" data-level="" data-path="anova.html"><a href="anova.html#pressupostos-da-anova"><i class="fa fa-check"></i>Pressupostos da ANOVA</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referências-bibliográficas.html"><a href="referências-bibliográficas.html"><i class="fa fa-check"></i>Referências bibliográficas</a></li>
@@ -174,10 +175,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>O <em>delineamento inteiramente casualizado (DIC)</em>, como visto anteriormente, é preferido quando as unidades experimentais são homogêneas entre si em suas principais características.</p>
 <p>Tal delineamento se dá quando os tratamentos (ou níveis de um fator) são distribuídos <strong>totalmente ao acaso</strong> dentre as unidades experimentais.</p>
 <p>Veremos adiante que há diferentes esquemas para se construir tratamentos, como em experimentos fatoriais e em parcelas subdivididas, porém, neste capítulo, trabalhamos apenas com um fator.</p>
+<hr />
 <div class="example">
-<p><span id="exm:unlabeled-div-1" class="example"><strong>Exemplo 1.1  </strong></span>Temos <span class="math inline">\(N=9\)</span> sementes de feijão e <span class="math inline">\(a=3\)</span> níveis de irrigação (A, B, C) e iremos medir o peso em gramas da planta, após determinado tempo.</p>
-<p>O DIC pode ser construido enumerando as sementes de 1 a 9 e sorteando aleatoriamente os tratamentos.</p>
-<p>É possível realizar este sorteio no R de diferentes maneiras. Uma delas é através da função <code>sample</code>.</p>
+<p><span id="exm:unlabeled-div-1" class="example"><strong>Exemplo 1.1  </strong></span><em>Temos <span class="math inline">\(N=9\)</span> sementes de feijão e <span class="math inline">\(a=3\)</span> níveis de irrigação (A, B, C) e iremos medir o peso em gramas da planta, após determinado tempo.</em></p>
+<p><em>O DIC pode ser construido enumerando as sementes de 1 a 9 e sorteando aleatoriamente os tratamentos.</em></p>
+<p><em>É possível realizar este sorteio no R de diferentes maneiras. Uma delas é através da função <code>sample</code>.</em></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="dic.html#cb1-1" aria-hidden="true" tabindex="-1"></a>N<span class="ot">=</span><span class="dv">9</span> <span class="co">#n. de unidades experimentais</span></span>
 <span id="cb1-2"><a href="dic.html#cb1-2" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span><span class="dv">3</span> <span class="co">#n. de tratamentos</span></span>
 <span id="cb1-3"><a href="dic.html#cb1-3" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">3</span> <span class="co">#n. de repetições</span></span>
@@ -269,14 +271,15 @@ C
 </tr>
 </tbody>
 </table>
-<p>Neste exemplo, a pergunta que surge é: existe algum nível de irrigação (tratamento) que é melhor do que os demais? Em outras palavras: os tratamentos são diferentes entre si?</p>
-<p>Estatisticamente falando, estamos estabelecendo hipóteses nula e alternativa:
+<p><em>Neste exemplo, a pergunta que surge é: existe algum nível de irrigação (tratamento) que é melhor do que os demais? Em outras palavras: os tratamentos são diferentes entre si?</em></p>
+<p><em>Estatisticamente falando, estamos estabelecendo hipóteses nula e alternativa:</em>
 <span class="math display">\[\begin{align*}
 H_0: &amp; \mu_1=\mu_2=\mu_3\\
 H_1: &amp; \mu_1\neq \mu_2 \text{ ou }\mu_1\neq \mu_3 \text{ ou }\mu_2\neq \mu_3
 \end{align*}\]</span></p>
-<p>Sob alguns pressupostos, pode ser testada utilizando a <strong>análise de variância</strong>, denominada <strong>ANOVA</strong> (do inglês: <strong>an</strong>alysis <strong>o</strong>f <strong>va</strong>riance)</p>
 </div>
+<hr />
+<p>Sob alguns pressupostos, hipóteses deste tipo podem ser testadas utilizando a <strong>análise de variância</strong>, denominada <strong>ANOVA</strong> (do inglês: <strong>an</strong>alysis <strong>o</strong>f <strong>va</strong>riance), que discutimos a seguir.</p>
 <!-- ------------------------------------------------------------ -->
 </div>
             </section>

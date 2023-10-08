@@ -14,12 +14,14 @@ Tal delineamento se dá quando os tratamentos (ou níveis de um fator) são dist
 
 Veremos adiante que há diferentes esquemas para se construir tratamentos, como em experimentos fatoriais e em parcelas subdivididas, porém, neste capítulo, trabalhamos apenas com um fator.
 
-::: {.example}
-Temos $N=9$ sementes de feijão e $a=3$ níveis de irrigação (A, B, C) e iremos medir o peso em gramas da planta, após determinado tempo.
+------------------------------------------------------------------
 
-O DIC pode ser construido enumerando as sementes de 1 a 9 e sorteando aleatoriamente os tratamentos.
+::: {.example} 
+_Temos $N=9$ sementes de feijão e $a=3$ níveis de irrigação (A, B, C) e iremos medir o peso em gramas da planta, após determinado tempo._
 
-É possível realizar este sorteio no R de diferentes maneiras. Uma delas é através da função `sample`.
+_O DIC pode ser construido enumerando as sementes de 1 a 9 e sorteando aleatoriamente os tratamentos._
+
+_É possível realizar este sorteio no R de diferentes maneiras. Uma delas é através da função `sample`._
 ```{r, include=FALSE}
 set.seed(321)
 ```
@@ -35,16 +37,18 @@ tab <- tibble("semente"=1:N, "tratamento"=sorteio)
 kable(tab, align='c')
 ```
 
-Neste exemplo, a pergunta que surge é: existe algum nível de irrigação (tratamento) que é melhor do que os demais? Em outras palavras: os tratamentos são diferentes entre si?
+_Neste exemplo, a pergunta que surge é: existe algum nível de irrigação (tratamento) que é melhor do que os demais? Em outras palavras: os tratamentos são diferentes entre si?_
 
-Estatisticamente falando, estamos estabelecendo hipóteses nula e alternativa:
+_Estatisticamente falando, estamos estabelecendo hipóteses nula e alternativa:_
 \begin{align*}
 H_0: & \mu_1=\mu_2=\mu_3\\
 H_1: & \mu_1\neq \mu_2 \text{ ou }\mu_1\neq \mu_3 \text{ ou }\mu_2\neq \mu_3
 \end{align*}
-
-Sob alguns pressupostos, pode ser testada utilizando a **análise de variância**, denominada **ANOVA** (do inglês: **an**alysis **o**f **va**riance)
 :::
+
+---------------------------------
+
+Sob alguns pressupostos, hipóteses deste tipo podem ser testadas utilizando a **análise de variância**, denominada **ANOVA** (do inglês: **an**alysis **o**f **va**riance), que discutimos a seguir.
 
 <!-- ------------------------------------------------------------ -->
 
@@ -54,16 +58,16 @@ Suponha que temos:
 
 - $a$ tratamentos (ou níveis de um fator)
 - $n$ repetições em cada tratamento
-- $N=na$ unidades experimentais
+- $N=na$ unidades experimentais,
 ou seja, estamos supondo que o DIC seja balanceado (mesmo número de repetições em cada tratamento)
 
-### Modelo estatístico {-}
+### Modelo estatístico (médias) {-}
 
 Um modelo estatístico tem como objetivo descrever matematicamente um fenômeno aleatório do mundo real. Com isso, há suposições que são consideradas, uma vez que se trata de uma aproximação matemática da realidade.
 
 "A realidade é muito mais complexa do que qualquer modelo matemático."
 
-> O **modelo estatístico do DIC** é:
+> O **modelo estatístico do DIC**, conhecido como é:
 \begin{equation}
 y_{ij}=\mu_i+\epsilon_{ij}
 \end{equation}
@@ -74,6 +78,55 @@ em que:
 - $y_{ij}$ é a observação $j$ do tratamento $i$ da variável resposta $y$
 - $\mu_i$ é a média (populacional) do tratamento $i$
 - $\epsilon_{ij}$ é o  erro aleatório da observação $j$ do tratamento $i$ (incorpora todas as fontes de variação que vão além da variação entre os tratamentos)
+
+Este modelo nos diz que cada observação é igual a média populacional do respectivo tratamento mais um erro aleatório individual. Ou seja, na perspectiva *frequentista* estamos considerando que $\mu_i$ é uma quantidade numérica fixa da população, a "verdadeira média", porém, por se tratar de um **parâmetro**, é desconhecida e não observável.
+
+O componente aleatório deste modelo é o erro $\epsilon_{ij}$, que é individual, i.e. para cada observação $j$ do tratamento $i$. 
+
+---------------------------------
+
+::: {.example}
+
+_Utilizando o exemplo anterior. Vamos supor, hipoteticamente, que você consultou um oráculo e sabe as médias populacionais dos $a=3$ níveis de irrigação. Considere que são:_
+\begin{align}
+\mu_1=30\\
+\mu_2=40\\
+\mu_3=50
+\end{align}
+
+_Se observamos as $n=3$ repetições no tratamento $1$ como: $y_{11}=33, y_{12}=31, y_{13}=25$; então, o modelo supões que:_
+\begin{align}
+y_{11}=\mu_1+\epsilon_{11} & \Leftrightarrow  33=30+(-3)\\
+y_{12}=\mu_1+\epsilon_{12} & \Leftrightarrow  31=30+1\\
+y_{13}=\mu_1+\epsilon_{13} & \Leftrightarrow  25=30+(-5)
+\end{align}
+
+_Note que, as médias populacionais, na prática, são desconhecidas. Temos acesso apenas as observações $y_{ij}$ e um dos objetivos da **inferência estatística** é, a partir das observações, estimar as médias populacionais. Uma estimativa "natural" para a média populacional é a média amostral._
+
+_Os erros aleatórios também não são observáveis, uma vez que $\epsilon_{ij}=y_{ij}-\mu_i$. No exemplo, $\epsilon_{11}=-3, \epsilon_{12}=1 \text{ e } \epsilon_{13}=-5$._
+
+:::
+
+### Pressupostos da ANOVA {-}
+
+Para dar seguimento com as análises estatísticas com a ANOVA, precisamos fazer algumas suposições com relação ao modelo estatístico apresentado, que são razoáveis em grande parte das aplicações.
+
+A principal suposição é que:
+$$\epsilon_{ij}\overset{ind}{\sim}N(0, \sigma^2)$$
+em que $i=1, 2, ..., a; j=1, 2, ..., n.$ Em outras palavras:
+
+1) **Os erros têm média zero**, i.e. $E(\epsilon_{ij})=0.$ Este pressuposto é relativamente intuitivo: as observações da variável resposta $y$ no tratamento $i$ são aleatórias em torno da respectiva média. 
+2) **Os erros têm distribuição normal**. Este pressuposto requer que a variável resposta seja aleatória com distribuição normal. O modelo estatístico nos diz que $y_{ij}=\mu_i+\epsilon_{ij}$ e como $\epsilon$ é normal, então $y$ também é. Logo, aplicar a ANOVA requer que a variável resposta $y$ seja normal. Isto se aplica a inúmeros exemplos e geralmente a variável resposta deve ser contínua, simétrica, com uma variabilidade razoável. Comprimento e peso são exemplo cássicos de aplicações.  Veremos como verificar os pressupostos em seção subsequente.
+3) **Os erros têm variâncias iguais** para todos os tratamentos, i.e. $\sigma^2_1=\sigma^2_1=\cdots =\sigma^2_a=\sigma^2$. Este pressuposto leva o nome de **homocedasticidade** (homogeneidade das variâncias).
+4) **Os erros são independentes**, i.e. as unidades experimentais devem ser independentes entre si. Em outras palavras, a observação de uma unidade não está associada a observação de outra unidade qualquer.
+
+A suposição acima poderia ser escrita por:
+$$y_{ij}\overset{ind}{\sim}N(\mu_i, \sigma^2)$$
+em que $i=1, 2, ..., a; j=1, 2, ..., n.$
+
+
+---------------------------------
+
 
 <!-- ------------------------------------------------------------ -->
 

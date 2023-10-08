@@ -23,7 +23,7 @@
 <meta name="author" content="Guaraci Requena" />
 
 
-<meta name="date" content="2023-10-07" />
+<meta name="date" content="2023-10-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -145,7 +145,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="1.1" data-path="anova.html"><a href="anova.html"><i class="fa fa-check"></i><b>1.1</b> ANOVA</a>
 <ul>
-<li class="chapter" data-level="" data-path="anova.html"><a href="anova.html#modelo-estatístico"><i class="fa fa-check"></i>Modelo estatístico</a></li>
+<li class="chapter" data-level="" data-path="anova.html"><a href="anova.html#modelo-estatístico-médias"><i class="fa fa-check"></i>Modelo estatístico (médias)</a></li>
+<li class="chapter" data-level="" data-path="anova.html"><a href="anova.html#pressupostos-da-anova"><i class="fa fa-check"></i>Pressupostos da ANOVA</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referências-bibliográficas.html"><a href="referências-bibliográficas.html"><i class="fa fa-check"></i>Referências bibliográficas</a></li>
@@ -175,15 +176,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><span class="math inline">\(a\)</span> tratamentos (ou níveis de um fator)</li>
 <li><span class="math inline">\(n\)</span> repetições em cada tratamento</li>
-<li><span class="math inline">\(N=na\)</span> unidades experimentais
+<li><span class="math inline">\(N=na\)</span> unidades experimentais,
 ou seja, estamos supondo que o DIC seja balanceado (mesmo número de repetições em cada tratamento)</li>
 </ul>
-<div id="modelo-estatístico" class="section level3 unnumbered hasAnchor">
-<h3>Modelo estatístico<a href="anova.html#modelo-estatístico" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="modelo-estatístico-médias" class="section level3 unnumbered hasAnchor">
+<h3>Modelo estatístico (médias)<a href="anova.html#modelo-estatístico-médias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Um modelo estatístico tem como objetivo descrever matematicamente um fenômeno aleatório do mundo real. Com isso, há suposições que são consideradas, uma vez que se trata de uma aproximação matemática da realidade.</p>
 <p>“A realidade é muito mais complexa do que qualquer modelo matemático.”</p>
 <blockquote>
-<p>O <strong>modelo estatístico do DIC</strong> é:
+<p>O <strong>modelo estatístico do DIC</strong>, conhecido como é:
 <span class="math display">\[\begin{equation}
 y_{ij}=\mu_i+\epsilon_{ij}
 \end{equation}\]</span>
@@ -196,6 +197,42 @@ em que:</p>
 <li><span class="math inline">\(\epsilon_{ij}\)</span> é o erro aleatório da observação <span class="math inline">\(j\)</span> do tratamento <span class="math inline">\(i\)</span> (incorpora todas as fontes de variação que vão além da variação entre os tratamentos)</li>
 </ul>
 </blockquote>
+<p>Este modelo nos diz que cada observação é igual a média populacional do respectivo tratamento mais um erro aleatório individual. Ou seja, na perspectiva <em>frequentista</em> estamos considerando que <span class="math inline">\(\mu_i\)</span> é uma quantidade numérica fixa da população, a “verdadeira média”, porém, por se tratar de um <strong>parâmetro</strong>, é desconhecida e não observável.</p>
+<p>O componente aleatório deste modelo é o erro <span class="math inline">\(\epsilon_{ij}\)</span>, que é individual, i.e. para cada observação <span class="math inline">\(j\)</span> do tratamento <span class="math inline">\(i\)</span>.</p>
+<hr />
+<div class="example">
+<p><span id="exm:unlabeled-div-2" class="example"><strong>Exemplo 1.2  </strong></span><em>Utilizando o exemplo anterior. Vamos supor, hipoteticamente, que você consultou um oráculo e sabe as médias populacionais dos <span class="math inline">\(a=3\)</span> níveis de irrigação. Considere que são:</em>
+<span class="math display">\[\begin{align}
+\mu_1=30\\
+\mu_2=40\\
+\mu_3=50
+\end{align}\]</span></p>
+<p><em>Se observamos as <span class="math inline">\(n=3\)</span> repetições no tratamento <span class="math inline">\(1\)</span> como: <span class="math inline">\(y_{11}=33, y_{12}=31, y_{13}=25\)</span>; então, o modelo supões que:</em>
+<span class="math display">\[\begin{align}
+y_{11}=\mu_1+\epsilon_{11} &amp; \Leftrightarrow  33=30+(-3)\\
+y_{12}=\mu_1+\epsilon_{12} &amp; \Leftrightarrow  31=30+1\\
+y_{13}=\mu_1+\epsilon_{13} &amp; \Leftrightarrow  25=30+(-5)
+\end{align}\]</span></p>
+<p><em>Note que, as médias populacionais, na prática, são desconhecidas. Temos acesso apenas as observações <span class="math inline">\(y_{ij}\)</span> e um dos objetivos da <strong>inferência estatística</strong> é, a partir das observações, estimar as médias populacionais. Uma estimativa “natural” para a média populacional é a média amostral.</em></p>
+<p><em>Os erros aleatórios também não são observáveis, uma vez que <span class="math inline">\(\epsilon_{ij}=y_{ij}-\mu_i\)</span>. No exemplo, <span class="math inline">\(\epsilon_{11}=-3, \epsilon_{12}=1 \text{ e } \epsilon_{13}=-5\)</span>.</em></p>
+</div>
+</div>
+<div id="pressupostos-da-anova" class="section level3 unnumbered hasAnchor">
+<h3>Pressupostos da ANOVA<a href="anova.html#pressupostos-da-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para dar seguimento com as análises estatísticas com a ANOVA, precisamos fazer algumas suposições com relação ao modelo estatístico apresentado, que são razoáveis em grande parte das aplicações.</p>
+<p>A principal suposição é que:
+<span class="math display">\[\epsilon_{ij}\overset{ind}{\sim}N(0, \sigma^2)\]</span>
+em que <span class="math inline">\(i=1, 2, ..., a; j=1, 2, ..., n.\)</span> Em outras palavras:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Os erros têm média zero</strong>, i.e. <span class="math inline">\(E(\epsilon_{ij})=0.\)</span> Este pressuposto é relativamente intuitivo: as observações da variável resposta <span class="math inline">\(y\)</span> no tratamento <span class="math inline">\(i\)</span> são aleatórias em torno da respectiva média.</li>
+<li><strong>Os erros têm distribuição normal</strong>. Este pressuposto requer que a variável resposta seja aleatória com distribuição normal. O modelo estatístico nos diz que <span class="math inline">\(y_{ij}=\mu_i+\epsilon_{ij}\)</span> e como <span class="math inline">\(\epsilon\)</span> é normal, então <span class="math inline">\(y\)</span> também é. Logo, aplicar a ANOVA requer que a variável resposta <span class="math inline">\(y\)</span> seja normal. Isto se aplica a inúmeros exemplos e geralmente a variável resposta deve ser contínua, simétrica, com uma variabilidade razoável. Comprimento e peso são exemplo cássicos de aplicações. Veremos como verificar os pressupostos em seção subsequente.</li>
+<li><strong>Os erros têm variâncias iguais</strong> para todos os tratamentos, i.e. <span class="math inline">\(\sigma^2_1=\sigma^2_1=\cdots =\sigma^2_a=\sigma^2\)</span>. Este pressuposto leva o nome de <strong>homocedasticidade</strong> (homogeneidade das variâncias).</li>
+<li><strong>Os erros são independentes</strong>, i.e. as unidades experimentais devem ser independentes entre si. Em outras palavras, a observação de uma unidade não está associada a observação de outra unidade qualquer.</li>
+</ol>
+<p>A suposição acima poderia ser escrita por:
+<span class="math display">\[y_{ij}\overset{ind}{\sim}N(\mu_i, \sigma^2)\]</span>
+em que <span class="math inline">\(i=1, 2, ..., a; j=1, 2, ..., n.\)</span></p>
+<hr />
 <!-- ------------------------------------------------------------ -->
 <!-- You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods). -->
 <!-- Figures and tables with captions will be placed in `figure` and `table` environments, respectively. -->
