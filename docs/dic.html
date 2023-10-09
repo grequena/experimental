@@ -23,7 +23,7 @@
 <meta name="author" content="Guaraci Requena" />
 
 
-<meta name="date" content="2023-10-08" />
+<meta name="date" content="2023-10-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="anova.html"/>
+<link rel="next" href="tabelas.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -143,12 +143,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a></li>
 <li class="chapter" data-level="1" data-path="dic.html"><a href="dic.html"><i class="fa fa-check"></i><b>1</b> Delineamento Inteiramente Casualizado</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="anova.html"><a href="anova.html"><i class="fa fa-check"></i><b>1.1</b> ANOVA</a>
+<li class="chapter" data-level="1.1" data-path="dic.html"><a href="dic.html#anova"><i class="fa fa-check"></i><b>1.1</b> ANOVA</a>
 <ul>
-<li class="chapter" data-level="" data-path="anova.html"><a href="anova.html#modelo-estatístico-médias"><i class="fa fa-check"></i>Modelo estatístico (médias)</a></li>
-<li class="chapter" data-level="" data-path="anova.html"><a href="anova.html#pressupostos-da-anova"><i class="fa fa-check"></i>Pressupostos da ANOVA</a></li>
+<li class="chapter" data-level="" data-path="dic.html"><a href="dic.html#modelo-estatístico-médias"><i class="fa fa-check"></i>Modelo estatístico (médias)</a></li>
+<li class="chapter" data-level="" data-path="dic.html"><a href="dic.html#pressupostos-da-anova"><i class="fa fa-check"></i>Pressupostos da ANOVA</a></li>
 </ul></li>
 </ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="tabelas.html"><a href="tabelas.html"><i class="fa fa-check"></i><b>A</b> Tabelas</a></li>
 <li class="chapter" data-level="" data-path="referências-bibliográficas.html"><a href="referências-bibliográficas.html"><i class="fa fa-check"></i>Referências bibliográficas</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -177,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Veremos adiante que há diferentes esquemas para se construir tratamentos, como em experimentos fatoriais e em parcelas subdivididas, porém, neste capítulo, trabalhamos apenas com um fator.</p>
 <hr />
 <div class="example">
-<p><span id="exm:unlabeled-div-1" class="example"><strong>Exemplo 1.1  </strong></span><em>Temos <span class="math inline">\(N=9\)</span> sementes de feijão e <span class="math inline">\(a=3\)</span> níveis de irrigação (A, B, C) e iremos medir o peso em gramas da planta, após determinado tempo.</em></p>
+<p><span id="exm:dic" class="example"><strong>Exemplo 1.1  </strong></span><em>Temos <span class="math inline">\(N=9\)</span> sementes de feijão e <span class="math inline">\(a=3\)</span> níveis de irrigação (A, B, C) e iremos medir o peso em gramas da planta, após determinado tempo.</em></p>
 <p><em>O DIC pode ser construido enumerando as sementes de 1 a 9 e sorteando aleatoriamente os tratamentos.</em></p>
 <p><em>É possível realizar este sorteio no R de diferentes maneiras. Uma delas é através da função <code>sample</code>.</em></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="dic.html#cb1-1" aria-hidden="true" tabindex="-1"></a>N<span class="ot">=</span><span class="dv">9</span> <span class="co">#n. de unidades experimentais</span></span>
@@ -281,14 +283,133 @@ H_1: &amp; \mu_1\neq \mu_2 \text{ ou }\mu_1\neq \mu_3 \text{ ou }\mu_2\neq \mu_3
 <hr />
 <p>Sob alguns pressupostos, hipóteses deste tipo podem ser testadas utilizando a <strong>análise de variância</strong>, denominada <strong>ANOVA</strong> (do inglês: <strong>an</strong>alysis <strong>o</strong>f <strong>va</strong>riance), que discutimos a seguir.</p>
 <!-- ------------------------------------------------------------ -->
+<div id="anova" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> ANOVA<a href="dic.html#anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suponha que temos:</p>
+<ul>
+<li><span class="math inline">\(a\)</span> tratamentos (ou níveis de um fator)</li>
+<li><span class="math inline">\(n\)</span> repetições em cada tratamento</li>
+<li><span class="math inline">\(N=na\)</span> unidades experimentais,
+ou seja, estamos supondo que o DIC seja balanceado (mesmo número de repetições em cada tratamento)</li>
+</ul>
+<div id="modelo-estatístico-médias" class="section level3 unnumbered hasAnchor">
+<h3>Modelo estatístico (médias)<a href="dic.html#modelo-estatístico-médias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Um modelo estatístico tem como objetivo descrever matematicamente um fenômeno aleatório do mundo real. Com isso, há suposições que são consideradas, uma vez que se trata de uma aproximação matemática da realidade.</p>
+<p>“A realidade é muito mais complexa do que qualquer modelo matemático.”</p>
+<blockquote>
+<p>O <strong>modelo estatístico do DIC</strong>, conhecido como é:
+<span class="math display" id="eq:modelodic">\[\begin{equation}
+y_{ij}=\mu_i+\epsilon_{ij}
+\tag{1.1}
+\end{equation}\]</span>
+em que:</p>
+<ul>
+<li><span class="math inline">\(i\)</span> é o índice do tratamento, variando em <span class="math inline">\(1, 2, ..., a\)</span></li>
+<li><span class="math inline">\(j\)</span> é o índice da repetição em cada tratamento, variando em <span class="math inline">\(1, 2, ..., n\)</span></li>
+<li><span class="math inline">\(y_{ij}\)</span> é a observação <span class="math inline">\(j\)</span> do tratamento <span class="math inline">\(i\)</span> da variável resposta <span class="math inline">\(y\)</span></li>
+<li><span class="math inline">\(\mu_i\)</span> é a média (populacional) do tratamento <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(\epsilon_{ij}\)</span> é o erro aleatório da observação <span class="math inline">\(j\)</span> do tratamento <span class="math inline">\(i\)</span> (incorpora todas as fontes de variação que vão além da variação entre os tratamentos)</li>
+</ul>
+</blockquote>
+<p>Este modelo nos diz que cada observação é igual a média populacional do respectivo tratamento mais um erro aleatório individual. Ou seja, na perspectiva <em>frequentista</em> estamos considerando que <span class="math inline">\(\mu_i\)</span> é uma quantidade numérica fixa da população, a “verdadeira média”, porém, por se tratar de um <strong>parâmetro</strong>, é desconhecida e não observável.</p>
+<p>O componente aleatório deste modelo é o erro <span class="math inline">\(\epsilon_{ij}\)</span>, que é individual, i.e. para cada observação <span class="math inline">\(j\)</span> do tratamento <span class="math inline">\(i\)</span>.</p>
+<hr />
+<div class="example">
+<p><span id="exm:unlabeled-div-1" class="example"><strong>Exemplo 1.2  </strong></span><em>Utilizando o Exemplo <a href="dic.html#exm:dic">1.1</a>, vamos supor, hipoteticamente, que você consultou um oráculo e sabe as médias populacionais dos <span class="math inline">\(a=3\)</span> níveis de irrigação. Considere que são:</em>
+<span class="math display">\[\begin{align}
+\mu_1=30\\
+\mu_2=40\\
+\mu_3=50
+\end{align}\]</span></p>
+<p><em>Se observamos as <span class="math inline">\(n=3\)</span> repetições no tratamento <span class="math inline">\(1\)</span> como: <span class="math inline">\(y_{11}=33, y_{12}=31, y_{13}=25\)</span>; então, a partir do modelo da Equação <a href="dic.html#eq:modelodic">(1.1)</a>, temos que:</em>
+<span class="math display">\[\begin{align}
+y_{11}=\mu_1+\epsilon_{11} &amp; \Leftrightarrow  33=30+(-3)\\
+y_{12}=\mu_1+\epsilon_{12} &amp; \Leftrightarrow  31=30+1\\
+y_{13}=\mu_1+\epsilon_{13} &amp; \Leftrightarrow  25=30+(-5)
+\end{align}\]</span></p>
+<p><em>Note que, as médias populacionais, na prática, são desconhecidas. Temos acesso apenas as observações <span class="math inline">\(y_{ij}\)</span> e um dos objetivos da <strong>inferência estatística</strong> é, a partir das observações, estimar as médias populacionais. Uma estimativa “natural” para a média populacional é a média amostral.</em></p>
+<p><em>Os erros aleatórios também não são observáveis, uma vez que <span class="math inline">\(\epsilon_{ij}=y_{ij}-\mu_i\)</span>. No exemplo, <span class="math inline">\(\epsilon_{11}=-3, \epsilon_{12}=1 \text{ e } \epsilon_{13}=-5\)</span>.</em></p>
 </div>
+</div>
+<div id="pressupostos-da-anova" class="section level3 unnumbered hasAnchor">
+<h3>Pressupostos da ANOVA<a href="dic.html#pressupostos-da-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para dar seguimento com as análises estatísticas com a ANOVA, precisamos fazer algumas suposições com relação ao modelo estatístico apresentado, que são razoáveis em grande parte das aplicações.</p>
+<p>A principal suposição é que:
+<span class="math display">\[\epsilon_{ij}\overset{ind}{\sim}N(0, \sigma^2)\]</span>
+em que <span class="math inline">\(i=1, 2, ..., a; j=1, 2, ..., n.\)</span> Em outras palavras:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Os erros têm média zero</strong>, i.e. <span class="math inline">\(E(\epsilon_{ij})=0.\)</span> Este pressuposto é relativamente intuitivo: as observações da variável resposta <span class="math inline">\(y\)</span> no tratamento <span class="math inline">\(i\)</span> são aleatórias em torno da respectiva média.</li>
+<li><strong>Os erros têm distribuição normal</strong>. Este pressuposto requer que a variável resposta seja aleatória com distribuição normal. O modelo estatístico nos diz que <span class="math inline">\(y_{ij}=\mu_i+\epsilon_{ij}\)</span> e como <span class="math inline">\(\epsilon\)</span> é normal, então <span class="math inline">\(y\)</span> também é. Logo, aplicar a ANOVA requer que a variável resposta <span class="math inline">\(y\)</span> seja normal. Isto se aplica a inúmeros exemplos e geralmente a variável resposta deve ser contínua, simétrica, com uma variabilidade razoável. Comprimento e peso são exemplo cássicos de aplicações. Veremos como verificar os pressupostos em seção subsequente.</li>
+<li><strong>Os erros têm variâncias iguais</strong> para todos os tratamentos, i.e. <span class="math inline">\(\sigma^2_1=\sigma^2_1=\cdots =\sigma^2_a=\sigma^2\)</span>. Este pressuposto leva o nome de <strong>homocedasticidade</strong> (homogeneidade das variâncias).</li>
+<li><strong>Os erros são independentes</strong>, i.e. as unidades experimentais devem ser independentes entre si. Em outras palavras, a observação de uma unidade não está associada a observação de outra unidade qualquer.</li>
+</ol>
+<p>A suposição acima poderia ser escrita por:
+<span class="math display">\[y_{ij}\overset{ind}{\sim}N(\mu_i, \sigma^2)\]</span>
+em que <span class="math inline">\(i=1, 2, ..., a; j=1, 2, ..., n.\)</span></p>
+<hr />
+<p>A normal paragraph.</p>
+
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="dic.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars)  <span class="co"># a scatterplot</span></span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:foo"></span>
+<img src="experimental_files/figure-html/foo-1.png" alt="A scatterplot of the data cars using base R graphics." width="672" />
+<p class="caption">
+Figura 1.1: A scatterplot of the data <code>cars</code> using <strong>base</strong> R graphics.
+</p>
+</div>
+<!-- ------------------------------------------------------------ -->
+<!-- You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods). -->
+<!-- Figures and tables with captions will be placed in `figure` and `table` environments, respectively. -->
+<!-- ```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'} -->
+<!-- par(mar = c(4, 4, .1, .1)) -->
+<!-- plot(pressure, type = 'b', pch = 19) -->
+<!-- ``` -->
+<!-- Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab). -->
+<!-- ```{r nice-tab, tidy=FALSE} -->
+<!-- knitr::kable( -->
+<!--   head(iris, 20), caption = 'Here is a nice table!', -->
+<!--   booktabs = TRUE -->
+<!-- ) -->
+<!-- ``` -->
+<!-- You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015]. -->
+
+<!-- # Literature -->
+<!-- Here is a review of existing methods. -->
+
+<!-- # Methods -->
+<!-- We describe our methods in this chapter. -->
+<!-- Math can be added in body using usual syntax like this  -->
+<!-- ## math example -->
+<!-- $p$ is unknown but expected to be around 1/3. Standard error will be approximated -->
+<!-- $$ -->
+<!-- SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027 -->
+<!-- $$ -->
+<!-- You can also use math in footnotes like this^[where we mention $p = \frac{a}{b}$]. -->
+<!-- We will approximate standard error to 0.027[^longnote] -->
+<!-- [^longnote]: $p$ is unknown but expected to be around 1/3. Standard error will be approximated -->
+<!--     $$ -->
+<!--     SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027 -->
+<!--     $$ -->
+
+<!-- # Applications -->
+<!-- Some _significant_ applications are demonstrated in this chapter. -->
+<!-- ## Example one -->
+<!-- ## Example two -->
+
+<!-- # Final Words -->
+<!-- We have finished a nice book. -->
+</div>
+</div>
+</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="anova.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tabelas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -17,3 +17,9 @@ anova
 section
 exm:unlabeled-div-2
 pressupostos-do-modelo
+exm:dic
+eq:modelodic
+appendix-a
+appendix-b
+tabelas
+fig:foo

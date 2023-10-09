@@ -16,7 +16,7 @@ Veremos adiante que há diferentes esquemas para se construir tratamentos, como 
 
 ------------------------------------------------------------------
 
-::: {.example} 
+::: {.example #dic} 
 _Temos $N=9$ sementes de feijão e $a=3$ níveis de irrigação (A, B, C) e iremos medir o peso em gramas da planta, após determinado tempo._
 
 _O DIC pode ser construido enumerando as sementes de 1 a 9 e sorteando aleatoriamente os tratamentos._
@@ -69,7 +69,8 @@ Um modelo estatístico tem como objetivo descrever matematicamente um fenômeno 
 
 > O **modelo estatístico do DIC**, conhecido como é:
 \begin{equation}
-y_{ij}=\mu_i+\epsilon_{ij}
+  y_{ij}=\mu_i+\epsilon_{ij}
+  (\#eq:modelodic)
 \end{equation}
 em que:
 > 
@@ -87,14 +88,14 @@ O componente aleatório deste modelo é o erro $\epsilon_{ij}$, que é individua
 
 ::: {.example}
 
-_Utilizando o exemplo anterior. Vamos supor, hipoteticamente, que você consultou um oráculo e sabe as médias populacionais dos $a=3$ níveis de irrigação. Considere que são:_
+_Utilizando o Exemplo \@ref(exm:dic), vamos supor, hipoteticamente, que você consultou um oráculo e sabe as médias populacionais dos $a=3$ níveis de irrigação. Considere que são:_
 \begin{align}
 \mu_1=30\\
 \mu_2=40\\
 \mu_3=50
 \end{align}
 
-_Se observamos as $n=3$ repetições no tratamento $1$ como: $y_{11}=33, y_{12}=31, y_{13}=25$; então, o modelo supões que:_
+_Se observamos as $n=3$ repetições no tratamento $1$ como: $y_{11}=33, y_{12}=31, y_{13}=25$; então, a partir do modelo da Equação \@ref(eq:modelodic), temos que:_
 \begin{align}
 y_{11}=\mu_1+\epsilon_{11} & \Leftrightarrow  33=30+(-3)\\
 y_{12}=\mu_1+\epsilon_{12} & \Leftrightarrow  31=30+1\\
@@ -128,27 +129,11 @@ em que $i=1, 2, ..., a; j=1, 2, ..., n.$
 ---------------------------------
 
 
-<!-- ------------------------------------------------------------ -->
+A normal paragraph.
 
+(ref:fooa) A scatterplot of the data `cars` using **base** R graphics. 
 
+```{r foo, fig.cap='(ref:fooa)'}
+plot(cars)  # a scatterplot
+```
 
-
-<!-- You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods). -->
-
-<!-- Figures and tables with captions will be placed in `figure` and `table` environments, respectively. -->
-
-<!-- ```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'} -->
-<!-- par(mar = c(4, 4, .1, .1)) -->
-<!-- plot(pressure, type = 'b', pch = 19) -->
-<!-- ``` -->
-
-<!-- Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab). -->
-
-<!-- ```{r nice-tab, tidy=FALSE} -->
-<!-- knitr::kable( -->
-<!--   head(iris, 20), caption = 'Here is a nice table!', -->
-<!--   booktabs = TRUE -->
-<!-- ) -->
-<!-- ``` -->
-
-<!-- You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015]. -->
