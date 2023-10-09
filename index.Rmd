@@ -1,14 +1,14 @@
 --- 
 title: "Estatística Experimental"
 author: "Guaraci Requena"
-date: "`r Sys.Date()`"
+date: "`r format(Sys.Date(), format = '%d/%m/%Y')`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: grequena/experimental
 description: "Aqui são encontradas algumas notas de aulas da disciplina MAF 261 - ESTATÍSTICA EXPERIMENTAL ministrada na Universidade Federal de Viçosa Campus Florestal"
 ---
 
