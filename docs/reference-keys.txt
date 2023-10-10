@@ -23,3 +23,12 @@ appendix-a
 appendix-b
 tabelas
 fig:foo
+modelo-alternativo-efeitos
+eq:modelodic2
+eq:hipoteseanova
+eq:hipanova
+modelo-estatístico-médias
+pressupostos-da-anova
+hipóteses
+por-quê-analisar-variância-para-comparar-médias
+por-que-analisar-variância-para-comparar-médias

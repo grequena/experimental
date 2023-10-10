@@ -14,8 +14,6 @@ Tal delineamento se dá quando os tratamentos (ou níveis de um fator) são dist
 
 Veremos adiante que há diferentes esquemas para se construir tratamentos, como em experimentos fatoriais e em parcelas subdivididas, porém, neste capítulo, trabalhamos apenas com um fator.
 
-------------------------------------------------------------------
-
 ::: {.example #dic} 
 _Temos $N=9$ sementes de feijão e $a=3$ níveis de irrigação (A, B, C) e iremos medir o peso em gramas da planta, após determinado tempo._
 
@@ -46,11 +44,13 @@ H_1: & \mu_1\neq \mu_2 \text{ ou }\mu_1\neq \mu_3 \text{ ou }\mu_2\neq \mu_3
 \end{align*}
 :::
 
----------------------------------
-
 Sob alguns pressupostos, hipóteses deste tipo podem ser testadas utilizando a **análise de variância**, denominada **ANOVA** (do inglês: **an**alysis **o**f **va**riance), que discutimos a seguir.
 
+
+
 <!-- ------------------------------------------------------------ -->
+
+
 
 ## ANOVA
 
@@ -61,13 +61,15 @@ Suponha que temos:
 - $N=na$ unidades experimentais,
 ou seja, estamos supondo que o DIC seja balanceado (mesmo número de repetições em cada tratamento)
 
-### Modelo estatístico (médias) {-}
+<!-- ----------------------------------------------- -->
+
+### Modelo estatístico (médias)
 
 Um modelo estatístico tem como objetivo descrever matematicamente um fenômeno aleatório do mundo real. Com isso, há suposições que são consideradas, uma vez que se trata de uma aproximação matemática da realidade.
 
 "A realidade é muito mais complexa do que qualquer modelo matemático."
 
-> O **modelo estatístico do DIC**, conhecido como é:
+> O **modelo estatístico do DIC** é escrito por:
 \begin{equation}
   y_{ij}=\mu_i+\epsilon_{ij}
   (\#eq:modelodic)
@@ -83,8 +85,6 @@ em que:
 Este modelo nos diz que cada observação é igual a média populacional do respectivo tratamento mais um erro aleatório individual. Ou seja, na perspectiva *frequentista* estamos considerando que $\mu_i$ é uma quantidade numérica fixa da população, a "verdadeira média", porém, por se tratar de um **parâmetro**, é desconhecida e não observável.
 
 O componente aleatório deste modelo é o erro $\epsilon_{ij}$, que é individual, i.e. para cada observação $j$ do tratamento $i$. 
-
----------------------------------
 
 ::: {.example}
 
@@ -108,7 +108,9 @@ _Os erros aleatórios também não são observáveis, uma vez que $\epsilon_{ij}
 
 :::
 
-### Pressupostos da ANOVA {-}
+<!-- ----------------------------------------------- -->
+
+### Pressupostos da ANOVA
 
 Para dar seguimento com as análises estatísticas com a ANOVA, precisamos fazer algumas suposições com relação ao modelo estatístico apresentado, que são razoáveis em grande parte das aplicações.
 
@@ -123,13 +125,96 @@ em que $i=1, 2, ..., a; j=1, 2, ..., n.$ Em outras palavras:
 
 A suposição acima poderia ser escrita por:
 $$y_{ij}\overset{ind}{\sim}N(\mu_i, \sigma^2)$$
-em que $i=1, 2, ..., a; j=1, 2, ..., n.$
+em que $i=1, 2, ..., a; j=1, 2, ..., n,$ uma vez que
+\begin{align}
+E(y_{ij})&=E(\mu_i+\epsilon_{ij})=E(\mu_i)+E(\epsilon_{ij})=\mu_i+0=\mu_i\\
+var(y_{ij})&=var(\mu_i+\epsilon_{ij})=var(\mu_i)+var(\epsilon_{ij})=0+\sigma^2=\sigma^2
+\end{align}
+
+<!-- ----------------------------------------------- -->
+
+### Modelo alternativo (efeitos)
+
+Uma maneira alternativa bastante utilizada e também intuitiva é o modelo de efeitos, definido abaixo.
+
+> O **modelo estatístico de efeitos do DIC** pode ser escrito por:
+\begin{equation}
+  y_{ij}=\mu+\tau_i+\epsilon_{ij}
+  (\#eq:modelodic2)
+\end{equation}
+em que i=1,2, ..., a; j=1, 2, ..., n; $y_{ij}$ e $\epsilon_{ij}$ são idênticos ao modelo de médias \@ref(eq:modelodic); e:
+> 
+- $\mu$ é uma média (populacional) global;
+- $\tau_i$ é o efeito (que pode ser positivo ou negativo) do tratamento $i$.
+
+Este modelo é análogo ao modelo de médias, mas pode trazer interpretações diferentes:
+
+- $\mu$ representa uma média geral, independente do tratamento
+- a média do tratamento $i$ pode ser escrita por $\mu_i=\mu+\tau_i$
+- o efeito $\tau_i$ é o que possivelmente diferencia a média de um tratamento do outro
+- se o efeito de $\tau_i$ é positivo, a média do tratamento $i$ está acima da média global; caso seja negativo, a média $\mu_i$ está abaixo de $\mu$; caso o efeito seja nulo, ele não se diferencia da média global
+- os efeitos $\tau_i$ também são parâmetros e, portanto, temos interesse em fazer inferência, uma vez que são desconhecidos e não observáveis
+- é razoável considerar que $\tau_1+\tau_2+\cdots =\tau_a=0$, i.e. a soma dos efeitos é nula. Isto faz com que a média das médias populacionais, ou seja:
+$$\frac{1}{a}\sum_{i=1}^a\mu_i=\frac{1}{a}\sum_{i=1}^a(\mu+\tau_i)=\frac{1}{a} \left( \sum_{i=1}^a\mu+\sum_{i=1}^a\tau_i \right) =\frac{1}{a}a\mu+0=\mu$$
+
+Tanto o modelo de médias quanto o modelo de efeitos são conhecidos como **ANOVA _ONE-WAY_** ou como **ANOVA DE FATOR ÚNICO**.
+
+<!-- ----------------------------------------------- -->
+
+### Hipóteses
+
+O modelo de médias nos diz que $y_{ij}=\mu_i+\epsilon_{ij}$. Os parâmetros que desejamos fazer inferência são as médias de cada tratamento. A hipótese a ser testada pela ANOVA é:
+\begin{equation}
+\begin{split}
+H_0: & \mu_1=\mu_2=\cdots =\mu_a\\
+H_1: & \mu_i\neq \mu_j, \text{ para algum } i\neq j
+\end{split}
+(\#eq:hipanova)
+\end{equation}
+
+Note que, a hipótese alternativa nos diz que basta uma das médias ser diferente das demais que $H_0$ é falsa.
+
+Ao utilizarmos o modelo de médias, note que:
+\begin{align}
+\mu_1=\mu_2=\cdots =\mu_a &\Leftrightarrow \mu+\tau_1=\mu+\tau_2=\cdots =\mu+\tau_a\\
+&\Leftrightarrow \tau_1=\tau_2=\cdots =\tau_a\\
+&\Leftrightarrow \tau_1=\tau_2=\cdots =\tau_a=0
+\end{align}
+Note que a terceira linha desta relação vem do fato que vimos anteriormente que $\tau_1+\tau_2+\cdots +\tau_a=0$ e se $\tau_1=\tau_2=\cdots =\tau_a$, a única possibilidade é que sejam todos iguais a zero.
+
+Dado isso, as hipóteses dadas pela Equação \@ref(eq:hipanova) são equivalentes a:
+\begin{equation}
+\begin{split}
+H_0: & \tau_1=\tau_2=\cdots =\tau_a=0\\
+H_1: & \tau_i\neq 0, \text{ para algum } i
+\end{split}
+\end{equation}
+Note que, basta que algum $\tau_i$ seja diferente de zero para que $H_0$ seja falsa.
+
+<!-- ----------------------------------------------- -->
+
+### Por que analisar variância para comparar médias?
+
+Quando temos apenas dois tratamentos, a hipótese nula a ser testada é $H_0: \mu_1=\mu_2$. 
+Sob o pressuposto de normalidade, podemos testar tal hipótese com o teste t e não precisamos da ANOVA.
+
+O teste t utiliza como estatística de teste, considerando tamanhos amostrais iguais ($n_1=n_2$) e variâncias iguais ($\sigma^2_1=\sigma^2_2$), a seguinte:
+$$t=\frac{\bar{y}_1-\bar{y}_2}{\sqrt{(S^2_1+S^2_2)/n}}$$
+em que:
+
+- t tem distribuição t-Student com $2n-2$ graus de liberdade
+- $\bar{y}_1$ e $\bar{y_2}$ são as médias amostrais dos tratamentos 1 e 2, respectivamente
+- $S_1^2$ e $S_2^2$ são as variâncias amostrais dos tratamentos 1 e 2, respectivamente
+
+O importante neste momento é notar que o valor absoluto da estatística $t$ mede uma distância padronizada (pelo erro padrão $\sqrt{(S^2_1+S^2_2)/n}$) entre as médias amostrais. Em resumo, se $|t|$ for "muito" diferente de zero, isso significa que $\bar y_1$ está "muito" distante de $\bar y_2$, trazendo evidência contra $H_0$. Note que, com um nível de significância estipulado, determinamos o quantil (t tabelado) que nos dá um ponto de corte para considerar o que é $|t|$ ser "muito" diferente de zero, ou seja, se $|t| > t_{tab}$, temos evidência o suficiente para rejeitar $H_0$.
+
+A pergunta que poderia surgir é, é possível medir uma "distância" entre 3 médias de tratamentos para concluir se há evidências o suficiente para rejeitar $H_0:\mu_1=\mu_2=\mu_3$?
 
 
----------------------------------
 
 
-A normal paragraph.
+
+-----------------------------------------------
 
 (ref:fooa) A scatterplot of the data `cars` using **base** R graphics. 
 
