@@ -216,20 +216,22 @@ O importante neste momento é notar que o valor absoluto da estatística $t$ med
 
 A pergunta que poderia surgir é, é possível medir uma "distância" entre 3 médias de tratamentos para concluir se há evidências o suficiente para rejeitar $H_0:\mu_1=\mu_2=\mu_3$?
 
-A resposta para esta pergunta não é tão trivial, mas está na em analisar as variâncias. Considere o seguinte exemplo, para compreender o porque analisar variâncias é útil para comparar médias.
+A resposta para esta pergunta não é tão trivial, mas está em analisar as variâncias. Considere o seguinte exemplo, para compreender o porque analisar variâncias é útil para comparar médias.
 
 ::: {.example} 
 <i>
 Considere dois cenários, ambos com $a=4$ tratamentos e $n=10$ repetições em cada tratamento, totalizando $N=40$ unidades experimentais.
 
-Vamos simular dados para o cenário A e B, seguindo os pressupostos da Subseção [Pressupostos], em que:
+Vamos simular dados para o cenário A e B, seguindo os pressupostos da subseção [Pressupostos], em que:
 
 - no cenário A há diferença entre as médias;
 - no cenário B **não** há diferença entre as médias.
 
 Os dados em ambos os cenários estão representados nos gráficos de dispersão abaixo.
-```{r, echo=FALSE}
-# carregue o pacote tidyverse com library(tidyverse)
+
+(ref:foo-1) Gráfico de dispersão dos cenários A e B, respectivamente. O ponto vermelho representa a média amostral em cada tratamento. A última coluna representa todos os dados, independente do tratamento.
+
+```{r foo-1, echo=FALSE, fig.cap='(ref:foo-1)'}
 set.seed(2468)
 n <- 10;a <- 4
 trat <- 1:a |> rep(n) |> sort()
@@ -248,23 +250,87 @@ w3 <- rnorm(n, m, 2);w4 <- rnorm(n, m, 2)
 w <- rep(c(w1,w2,w3,w4),2)
 d2 <- tibble(w,trat)
 
-d1 |> ggplot(aes(x=trat, y=y)) + geom_point()
-d2 |> ggplot(aes(x=trat, y=w)) + geom_point()
+p1 <- d1 |> 
+  ggplot(aes(x=trat, y=y)) + 
+  geom_point(shape=4) +
+  stat_summary(
+    geom = "point",
+    fun = "mean",
+    col = "red",
+    size = 2,
+    shape = 19
+  ) +
+  labs(title="Cenário A",
+       x="Tratamento", 
+       y="Variável Resposta") +
+  theme(axis.text.y = element_blank())+
+  scale_x_continuous(breaks=1:5,
+                   labels=c("Trat 1","Trat 2","Trat 3",
+                            "Trat 4","Total"))
+
+p2 <- d2 |> 
+  ggplot(aes(x=trat, y=w)) + 
+  geom_point(shape=4) +
+  stat_summary(
+    geom = "point",
+    fun = "mean",
+    col = "red",
+    size = 2,
+    shape = 19
+  ) +
+  labs(title="Cenário B",
+       x="Tratamento", 
+       y="Variável Resposta") +
+  theme(axis.text.y = element_blank())+
+  scale_x_continuous(breaks=1:5,
+                   labels=c("Trat 1","Trat 2","Trat 3",
+                            "Trat 4","Total"))
+
+gridExtra::grid.arrange(p1, p2, ncol=2)
 ```
 
+Podemos ver na Figura \@ref(fig:foo-1) que de fato o cenário A é diferente do B no que diz respeito às médias; no cenário A as médias amostrais dos tratamentos de 1 a 4 (primeiras 4 colunas) são bem diferentes e no cenário B são próximas. 
 
+Mas observe a dispersão (variância) em cada um dos 4 tratamentos. Em ambos os cenários as dispersões entre os tratamentos são similares entre si. Agora observe a dispersão do total (última coluna):
+
+- no cenário A, as dispersões dos tratamentos são **diferentes** da dispersão total
+- no cenário B, as dispersões dos tratamentos são **similares**  da dispersão total
+
+Isso nos leva a crer na seguinte afirmação:
+
+> se as variâncias dos tratamentos são diferentes da variância total dos dados, então as médias são diferentes entre si.
+
+Vamos colocar em termos numéricos estas diferenças. As variâncias amostrais de ambos os cenários são organizadas na tabela abaixo.
+```{r echo=FALSE}
+vary <- d1 |> group_by(trat) |> summarise(sd(y)) |> select(2) |> as_vector()
+varw <- d2 |> group_by(trat) |> summarise(sd(w)) |> select(2) |> as_vector()
+
+tab <- rbind(t(vary),t(varw))
+colnames(tab) <- c("$S^2_1$","$S^2_2$","$S^2_3$",
+                   "$S^2_4$","$S^2_{Total}$")
+rownames(tab) <- c('Cenário A', 'Cenário B')
+kable(tab, digits=2)
+```
+
+Ao analisar as primeiras 4 colunas (tratamentos) com a última (total), confirmamos que:
+
+- as variâncias dos tratamentos são similares entre si (o que, vale ressaltar, nos leva a crer que o pressuposto de homocedasticidade é válido)
+- as variâncias dos tratamentos são diferentes da variância total no cenário A, mas similar no cenário B
+
+Podemos mensurar esta diferença, fazendo uma variância média dos tratamentos e comparar com a total. Considere a variância média como:
+$$\overline{S^2}=\frac{1}{a}\sum_{i=1}^aS^2_i$$
+e podemos considerar o ganho relativo na variância, obtido ao se considerar os tratamentos, isto é: 
+$$R^2=\frac{S^2_{Total}-\overline{S^2}}{S^2_{Total}}$$
+Em outras palavras, o $R^2$ mede o quanto a variância total reduziu quando estamos considerando o tratamento que cada observação pertence. Não precisamos interpretá-lo a fundo agora, até porque construiremos outra medida que chamaremos de $F$. A medida $R^2$ é conhecida na Estatística e leva o nome de coeficiente de determinação. 
+
+O que precisamos saber no momento é que $0\leq R^2 \leq 1$ e quanto mais próximo de 1, mas diferente são $S^2_{Total}$ e $\overline{S^2}$ e quanto mais próximo de 0, mais próximos são $S^2_{Total}$ e $\overline{S^2}$.
+
+No cenário A, esta medida é igual a `r round(1-(mean(tab[1,1:4])/tab[1,5]),1)` e no cenário B é igual a `r round(1-(mean(tab[2,1:4])/tab[2,5]),1)`. Podemos interpretar da seguinte maneira:
+
+- no cenário A, 80% da variabilidade dos dados foi explicada pelos tratamentos, tornando os tratamentos um aspecto importante para explicar a variável resposta
+- no cenário B, 0% da variabilidade dos dados foi explicada pelos tratamenos, o que mostra a irrelevância dos tratamentos para explicar a variável respota
+
+Em subseção subsequente, construímos uma medida parecida com esta razão que terá distribuição F e, assim, podemos utilizar o teste F para analisar tais variâncias e concluir se há evidências favoráveis ou contrárias à igualdade das médias.
 </i>
 :::
-
-
-
-
-
------------------------------------------------
-
-(ref:fooa) A scatterplot of the data `cars` using **base** R graphics. 
-
-```{r foo, fig.cap='(ref:fooa)'}
-plot(cars)  # a scatterplot
-```
 

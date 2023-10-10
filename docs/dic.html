@@ -425,27 +425,117 @@ em que:</p>
 </ul>
 <p>O importante neste momento é notar que o valor absoluto da estatística <span class="math inline">\(t\)</span> mede uma distância padronizada (pelo erro padrão <span class="math inline">\(\sqrt{(S^2_1+S^2_2)/n}\)</span>) entre as médias amostrais. Em resumo, se <span class="math inline">\(|t|\)</span> for “muito” diferente de zero, isso significa que <span class="math inline">\(\bar y_1\)</span> está “muito” distante de <span class="math inline">\(\bar y_2\)</span>, trazendo evidência contra <span class="math inline">\(H_0\)</span>. Note que, com um nível de significância estipulado, determinamos o quantil (t tabelado) que nos dá um ponto de corte para considerar o que é <span class="math inline">\(|t|\)</span> ser “muito” diferente de zero, ou seja, se <span class="math inline">\(|t| &gt; t_{tab}\)</span>, temos evidência o suficiente para rejeitar <span class="math inline">\(H_0\)</span>.</p>
 <p>A pergunta que poderia surgir é, é possível medir uma “distância” entre 3 médias de tratamentos para concluir se há evidências o suficiente para rejeitar <span class="math inline">\(H_0:\mu_1=\mu_2=\mu_3\)</span>?</p>
-<p>A resposta para esta pergunta não é tão trivial, mas está na em analisar as variâncias. Considere o seguinte exemplo, para compreender o porque analisar variâncias é útil para comparar médias.</p>
+<p>A resposta para esta pergunta não é tão trivial, mas está em analisar as variâncias. Considere o seguinte exemplo, para compreender o porque analisar variâncias é útil para comparar médias.</p>
 <div class="example">
 <p><span id="exm:unlabeled-div-2" class="example"><strong>Exemplo 1.3  </strong></span><i>
 Considere dois cenários, ambos com <span class="math inline">\(a=4\)</span> tratamentos e <span class="math inline">\(n=10\)</span> repetições em cada tratamento, totalizando <span class="math inline">\(N=40\)</span> unidades experimentais.</p>
-<p>Vamos simular dados para o cenário A e B, seguindo os pressupostos da Subseção <a href="dic.html#pressupostos">Pressupostos</a>, em que:</p>
+<p>Vamos simular dados para o cenário A e B, seguindo os pressupostos da subseção <a href="dic.html#pressupostos">Pressupostos</a>, em que:</p>
 <ul>
 <li>no cenário A há diferença entre as médias;</li>
 <li>no cenário B <strong>não</strong> há diferença entre as médias.</li>
 </ul>
-<p>Os dados em ambos os cenários estão representados nos gráficos de dispersão abaixo.
-<img src="experimental_files/figure-html/unnamed-chunk-4-1.png" width="672" /><img src="experimental_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
-<p></i></p>
-</div>
-<hr />
+<p>Os dados em ambos os cenários estão representados nos gráficos de dispersão abaixo.</p>
 
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="dic.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars)  <span class="co"># a scatterplot</span></span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:foo"></span>
-<img src="experimental_files/figure-html/foo-1.png" alt="A scatterplot of the data cars using base R graphics." width="672" />
+<div class="figure"><span style="display:block;" id="fig:foo-1"></span>
+<img src="experimental_files/figure-html/foo-1-1.png" alt="Gráfico de dispersão dos cenários A e B, respectivamente. O ponto vermelho representa a média amostral em cada tratamento. A última coluna representa todos os dados, independente do tratamento." width="672" />
 <p class="caption">
-Figura 1.1: A scatterplot of the data <code>cars</code> using <strong>base</strong> R graphics.
+Figura 1.1: Gráfico de dispersão dos cenários A e B, respectivamente. O ponto vermelho representa a média amostral em cada tratamento. A última coluna representa todos os dados, independente do tratamento.
 </p>
+</div>
+<p>Podemos ver na Figura <a href="dic.html#fig:foo-1">1.1</a> que de fato o cenário A é diferente do B no que diz respeito às médias; no cenário A as médias amostrais dos tratamentos de 1 a 4 (primeiras 4 colunas) são bem diferentes e no cenário B são próximas.</p>
+<p>Mas observe a dispersão (variância) em cada um dos 4 tratamentos. Em ambos os cenários as dispersões entre os tratamentos são similares entre si. Agora observe a dispersão do total (última coluna):</p>
+<ul>
+<li>no cenário A, as dispersões dos tratamentos são <strong>diferentes</strong> da dispersão total</li>
+<li>no cenário B, as dispersões dos tratamentos são <strong>similares</strong> da dispersão total</li>
+</ul>
+<p>Isso nos leva a crer na seguinte afirmação:</p>
+<blockquote>
+<p>se as variâncias dos tratamentos são diferentes da variância total dos dados, então as médias são diferentes entre si.</p>
+</blockquote>
+Vamos colocar em termos numéricos estas diferenças. As variâncias amostrais de ambos os cenários são organizadas na tabela abaixo.
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(S^2_1\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(S^2_2\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(S^2_3\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(S^2_4\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(S^2_{Total}\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Cenário A
+</td>
+<td style="text-align:right;">
+1.62
+</td>
+<td style="text-align:right;">
+2.03
+</td>
+<td style="text-align:right;">
+1.81
+</td>
+<td style="text-align:right;">
+1.84
+</td>
+<td style="text-align:right;">
+12.11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cenário B
+</td>
+<td style="text-align:right;">
+1.52
+</td>
+<td style="text-align:right;">
+2.07
+</td>
+<td style="text-align:right;">
+1.72
+</td>
+<td style="text-align:right;">
+1.77
+</td>
+<td style="text-align:right;">
+1.75
+</td>
+</tr>
+</tbody>
+</table>
+<p>Ao analisar as primeiras 4 colunas (tratamentos) com a última (total), confirmamos que:</p>
+<ul>
+<li>as variâncias dos tratamentos são similares entre si (o que, vale ressaltar, nos leva a crer que o pressuposto de homocedasticidade é válido)</li>
+<li>as variâncias dos tratamentos são diferentes da variância total no cenário A, mas similar no cenário B</li>
+</ul>
+<p>Podemos mensurar esta diferença, fazendo uma variância média dos tratamentos e comparar com a total. Considere a variância média como:
+<span class="math display">\[\overline{S^2}=\frac{1}{a}\sum_{i=1}^aS^2_i\]</span>
+e podemos considerar o ganho relativo na variância, obtido ao se considerar os tratamentos, isto é:
+<span class="math display">\[R^2=\frac{S^2_{Total}-\overline{S^2}}{S^2_{Total}}\]</span>
+Em outras palavras, o <span class="math inline">\(R^2\)</span> mede o quanto a variância total reduziu quando estamos considerando o tratamento que cada observação pertence. Não precisamos interpretá-lo a fundo agora, até porque construiremos outra medida que chamaremos de <span class="math inline">\(F\)</span>. A medida <span class="math inline">\(R^2\)</span> é conhecida na Estatística e leva o nome de coeficiente de determinação.</p>
+<p>O que precisamos saber no momento é que <span class="math inline">\(0\leq R^2 \leq 1\)</span> e quanto mais próximo de 1, mas diferente são <span class="math inline">\(S^2_{Total}\)</span> e <span class="math inline">\(\overline{S^2}\)</span> e quanto mais próximo de 0, mais próximos são <span class="math inline">\(S^2_{Total}\)</span> e <span class="math inline">\(\overline{S^2}\)</span>.</p>
+<p>No cenário A, esta medida é igual a 0.8 e no cenário B é igual a 0. Podemos interpretar da seguinte maneira:</p>
+<ul>
+<li>no cenário A, 80% da variabilidade dos dados foi explicada pelos tratamentos, tornando os tratamentos um aspecto importante para explicar a variável resposta</li>
+<li>no cenário B, 0% da variabilidade dos dados foi explicada pelos tratamenos, o que mostra a irrelevância dos tratamentos para explicar a variável respota</li>
+</ul>
+<p>Em subseção subsequente, construímos uma medida parecida com esta razão que terá distribuição F e, assim, podemos utilizar o teste F para analisar tais variâncias e concluir se há evidências favoráveis ou contrárias à igualdade das médias.
+</i></p>
 </div>
 
 <!-- # Literature -->

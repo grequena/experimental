@@ -34,3 +34,7 @@ por-quê-analisar-variância-para-comparar-médias
 por-que-analisar-variância-para-comparar-médias
 pressupostos-da-anova-pressupostos
 pressupostos
+fig:unnamed-chunk-4-1
+fig:unnamed-chunk-4-2
+fig:unnamed-chunk-4
+fig:foo-1
