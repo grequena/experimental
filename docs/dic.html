@@ -146,7 +146,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.1" data-path="dic.html"><a href="dic.html#anova"><i class="fa fa-check"></i><b>1.1</b> ANOVA</a>
 <ul>
 <li class="chapter" data-level="1.1.1" data-path="dic.html"><a href="dic.html#modelo-estatístico-médias"><i class="fa fa-check"></i><b>1.1.1</b> Modelo estatístico (médias)</a></li>
-<li class="chapter" data-level="1.1.2" data-path="dic.html"><a href="dic.html#pressupostos-da-anova"><i class="fa fa-check"></i><b>1.1.2</b> Pressupostos da ANOVA</a></li>
+<li class="chapter" data-level="1.1.2" data-path="dic.html"><a href="dic.html#pressupostos"><i class="fa fa-check"></i><b>1.1.2</b> Pressupostos</a></li>
 <li class="chapter" data-level="1.1.3" data-path="dic.html"><a href="dic.html#modelo-alternativo-efeitos"><i class="fa fa-check"></i><b>1.1.3</b> Modelo alternativo (efeitos)</a></li>
 <li class="chapter" data-level="1.1.4" data-path="dic.html"><a href="dic.html#hipóteses"><i class="fa fa-check"></i><b>1.1.4</b> Hipóteses</a></li>
 <li class="chapter" data-level="1.1.5" data-path="dic.html"><a href="dic.html#por-que-analisar-variância-para-comparar-médias"><i class="fa fa-check"></i><b>1.1.5</b> Por que analisar variância para comparar médias?</a></li>
@@ -333,15 +333,15 @@ y_{13}=\mu_1+\epsilon_{13} &amp; \Leftrightarrow  25=30+(-5)
 </div>
 <!-- ----------------------------------------------- -->
 </div>
-<div id="pressupostos-da-anova" class="section level3 hasAnchor" number="1.1.2">
-<h3><span class="header-section-number">1.1.2</span> Pressupostos da ANOVA<a href="dic.html#pressupostos-da-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="pressupostos" class="section level3 hasAnchor" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Pressupostos<a href="dic.html#pressupostos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Para dar seguimento com as análises estatísticas com a ANOVA, precisamos fazer algumas suposições com relação ao modelo estatístico apresentado, que são razoáveis em grande parte das aplicações.</p>
 <p>A principal suposição é que:
 <span class="math display">\[\epsilon_{ij}\overset{ind}{\sim}N(0, \sigma^2)\]</span>
 em que <span class="math inline">\(i=1, 2, ..., a; j=1, 2, ..., n.\)</span> Em outras palavras:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Os erros têm média zero</strong>, i.e. <span class="math inline">\(E(\epsilon_{ij})=0.\)</span> Este pressuposto é relativamente intuitivo: as observações da variável resposta <span class="math inline">\(y\)</span> no tratamento <span class="math inline">\(i\)</span> são aleatórias em torno da respectiva média.</li>
-<li><strong>Os erros têm distribuição normal</strong>. Este pressuposto requer que a variável resposta seja aleatória com distribuição normal. O modelo estatístico nos diz que <span class="math inline">\(y_{ij}=\mu_i+\epsilon_{ij}\)</span> e como <span class="math inline">\(\epsilon\)</span> é normal, então <span class="math inline">\(y\)</span> também é. Logo, aplicar a ANOVA requer que a variável resposta <span class="math inline">\(y\)</span> seja normal. Isto se aplica a inúmeros exemplos e geralmente a variável resposta deve ser contínua, simétrica, com uma variabilidade razoável. Comprimento e peso são exemplo cássicos de aplicações. Veremos como verificar os pressupostos em seção subsequente.</li>
+<li><strong>Os erros têm distribuição normal</strong>. Este pressuposto requer que a variável resposta seja aleatória com distribuição normal. O modelo estatístico nos diz que <span class="math inline">\(y_{ij}=\mu_i+\epsilon_{ij}\)</span> e como <span class="math inline">\(\epsilon\)</span> é normal, então <span class="math inline">\(y\)</span> também é. Logo, aplicar a ANOVA requer que a variável resposta <span class="math inline">\(y\)</span> seja normal. Isto se aplica a inúmeros exemplos e geralmente a variável resposta deve ser contínua, simétrica, com uma variabilidade razoável (sem muitos empates). Comprimento e peso são exemplo clássicos de aplicações. Veremos como verificar os pressupostos em seção subsequente.</li>
 <li><strong>Os erros têm variâncias iguais</strong> para todos os tratamentos, i.e. <span class="math inline">\(\sigma^2_1=\sigma^2_1=\cdots =\sigma^2_a=\sigma^2\)</span>. Este pressuposto leva o nome de <strong>homocedasticidade</strong> (homogeneidade das variâncias).</li>
 <li><strong>Os erros são independentes</strong>, i.e. as unidades experimentais devem ser independentes entre si. Em outras palavras, a observação de uma unidade não está associada a observação de outra unidade qualquer.</li>
 </ol>
@@ -366,7 +366,7 @@ y_{ij}=\mu+\tau_i+\epsilon_{ij}
 em que i=1,2, …, a; j=1, 2, …, n; <span class="math inline">\(y_{ij}\)</span> e <span class="math inline">\(\epsilon_{ij}\)</span> são idênticos ao modelo de médias <a href="dic.html#eq:modelodic">(1.1)</a>; e:</p>
 <ul>
 <li><span class="math inline">\(\mu\)</span> é uma média (populacional) global;</li>
-<li><span class="math inline">\(\tau_i\)</span> é o efeito (que pode ser positivo ou negativo) do tratamento <span class="math inline">\(i\)</span>.</li>
+<li><span class="math inline">\(\tau_i\)</span> é o efeito do tratamento <span class="math inline">\(i\)</span> (que pode ser positivo, negativo ou nulo).</li>
 </ul>
 </blockquote>
 <p>Este modelo é análogo ao modelo de médias, mas pode trazer interpretações diferentes:</p>
@@ -374,9 +374,10 @@ em que i=1,2, …, a; j=1, 2, …, n; <span class="math inline">\(y_{ij}\)</span
 <li><span class="math inline">\(\mu\)</span> representa uma média geral, independente do tratamento</li>
 <li>a média do tratamento <span class="math inline">\(i\)</span> pode ser escrita por <span class="math inline">\(\mu_i=\mu+\tau_i\)</span></li>
 <li>o efeito <span class="math inline">\(\tau_i\)</span> é o que possivelmente diferencia a média de um tratamento do outro</li>
-<li>se o efeito de <span class="math inline">\(\tau_i\)</span> é positivo, a média do tratamento <span class="math inline">\(i\)</span> está acima da média global; caso seja negativo, a média <span class="math inline">\(\mu_i\)</span> está abaixo de <span class="math inline">\(\mu\)</span>; caso o efeito seja nulo, ele não se diferencia da média global</li>
-<li>os efeitos <span class="math inline">\(\tau_i\)</span> também são parâmetros e, portanto, temos interesse em fazer inferência, uma vez que são desconhecidos e não observáveis</li>
-<li>é razoável considerar que <span class="math inline">\(\tau_1+\tau_2+\cdots =\tau_a=0\)</span>, i.e. a soma dos efeitos é nula. Isto faz com que a média das médias populacionais, ou seja:
+<li>se o efeito de <span class="math inline">\(\tau_i\)</span> é positivo, a média do tratamento <span class="math inline">\(i\)</span> está acima da média global; caso seja negativo, a média <span class="math inline">\(\mu_i\)</span> está abaixo de <span class="math inline">\(\mu\)</span>; caso o efeito seja nulo, a média do tratamento é igual a média global</li>
+<li>se todos os efeitos são nulos, então <span class="math inline">\(\mu_i=\mu, i=1, 2, ..., a\)</span>, ou seja, <span class="math inline">\(\mu_1=\mu_2=\cdots \mu_a=\mu\)</span></li>
+<li>os efeitos <span class="math inline">\(\tau_i\)</span> também são parâmetros e, portanto, temos interesse em fazer inferência, uma vez que são reponsáveis por diferenciar um tratamento do outro</li>
+<li>é razoável considerar que <span class="math inline">\(\tau_1+\tau_2+\cdots =\tau_a=0\)</span>, i.e. a soma dos efeitos é nula. Isto faz com que a média global <span class="math inline">\(\mu\)</span> seja uma média das médias populacionais (muita média em uma mesma frase, o que pode ser confuso), ou seja:
 <span class="math display">\[\frac{1}{a}\sum_{i=1}^a\mu_i=\frac{1}{a}\sum_{i=1}^a(\mu+\tau_i)=\frac{1}{a} \left( \sum_{i=1}^a\mu+\sum_{i=1}^a\tau_i \right) =\frac{1}{a}a\mu+0=\mu\]</span></li>
 </ul>
 <p>Tanto o modelo de médias quanto o modelo de efeitos são conhecidos como <strong>ANOVA <em>ONE-WAY</em></strong> ou como <strong>ANOVA DE FATOR ÚNICO</strong>.</p>
@@ -424,6 +425,19 @@ em que:</p>
 </ul>
 <p>O importante neste momento é notar que o valor absoluto da estatística <span class="math inline">\(t\)</span> mede uma distância padronizada (pelo erro padrão <span class="math inline">\(\sqrt{(S^2_1+S^2_2)/n}\)</span>) entre as médias amostrais. Em resumo, se <span class="math inline">\(|t|\)</span> for “muito” diferente de zero, isso significa que <span class="math inline">\(\bar y_1\)</span> está “muito” distante de <span class="math inline">\(\bar y_2\)</span>, trazendo evidência contra <span class="math inline">\(H_0\)</span>. Note que, com um nível de significância estipulado, determinamos o quantil (t tabelado) que nos dá um ponto de corte para considerar o que é <span class="math inline">\(|t|\)</span> ser “muito” diferente de zero, ou seja, se <span class="math inline">\(|t| &gt; t_{tab}\)</span>, temos evidência o suficiente para rejeitar <span class="math inline">\(H_0\)</span>.</p>
 <p>A pergunta que poderia surgir é, é possível medir uma “distância” entre 3 médias de tratamentos para concluir se há evidências o suficiente para rejeitar <span class="math inline">\(H_0:\mu_1=\mu_2=\mu_3\)</span>?</p>
+<p>A resposta para esta pergunta não é tão trivial, mas está na em analisar as variâncias. Considere o seguinte exemplo, para compreender o porque analisar variâncias é útil para comparar médias.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-2" class="example"><strong>Exemplo 1.3  </strong></span><i>
+Considere dois cenários, ambos com <span class="math inline">\(a=4\)</span> tratamentos e <span class="math inline">\(n=10\)</span> repetições em cada tratamento, totalizando <span class="math inline">\(N=40\)</span> unidades experimentais.</p>
+<p>Vamos simular dados para o cenário A e B, seguindo os pressupostos da Subseção <a href="dic.html#pressupostos">Pressupostos</a>, em que:</p>
+<ul>
+<li>no cenário A há diferença entre as médias;</li>
+<li>no cenário B <strong>não</strong> há diferença entre as médias.</li>
+</ul>
+<p>Os dados em ambos os cenários estão representados nos gráficos de dispersão abaixo.
+<img src="experimental_files/figure-html/unnamed-chunk-4-1.png" width="672" /><img src="experimental_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p></i></p>
+</div>
 <hr />
 
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="dic.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars)  <span class="co"># a scatterplot</span></span></code></pre></div>
