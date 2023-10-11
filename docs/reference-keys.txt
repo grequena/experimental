@@ -38,3 +38,6 @@ fig:unnamed-chunk-4-1
 fig:unnamed-chunk-4-2
 fig:unnamed-chunk-4
 fig:foo-1
+eq:pressuposto
+modelo-estatístico
+modelo-de-efeitos

@@ -13,7 +13,7 @@ library(kableExtra)
 library(tidyverse)
 ```
 
-O *delineamento inteiramente casualizado (DIC)*, como visto anteriormente, é preferido quando as unidades experimentais são homogêneas entre si em suas principais características.
+O *delineamento inteiramente casualizado (DIC)*, como visto anteriormente, é preferido quando as unidades experimentais são homogêneas entre si em suas principais características (que podem influenciar na variável resposta).
 
 Tal delineamento se dá quando os tratamentos (ou níveis de um fator) são distribuídos **totalmente ao acaso** dentre as unidades experimentais.
 
@@ -25,6 +25,9 @@ _Temos $N=9$ sementes de feijão e $a=3$ níveis de irrigação (A, B, C) e irem
 _O DIC pode ser construido enumerando as sementes de 1 a 9 e sorteando aleatoriamente os tratamentos._
 
 _É possível realizar este sorteio no R de diferentes maneiras. Uma delas é através da função `sample`._
+:::
+
+<details> <summary><span style="color:blue">Código em R com resultado</span></summary>
 ```{r, include=FALSE}
 set.seed(321)
 ```
@@ -39,15 +42,18 @@ print(data.frame("semente"=1:N,"tratamento"=sorteio))
 tab <- tibble("semente"=1:N, "tratamento"=sorteio)
 kable(tab, align='c')
 ```
+<hr style="width:5%">
+</details>
+<p style="text-align:right;">$\square$</p>
 
-_Neste exemplo, a pergunta que surge é: existe algum nível de irrigação (tratamento) que é melhor do que os demais? Em outras palavras: os tratamentos são diferentes entre si?_
+Neste exemplo, a pergunta que surge é: existe algum nível de irrigação (tratamento) que é melhor do que os demais? Em outras palavras: os tratamentos são diferentes entre si?
 
-_Estatisticamente falando, estamos estabelecendo hipóteses nula e alternativa:_
+Estatisticamente falando, estamos estabelecendo hipóteses nula e alternativa:
 \begin{align*}
 H_0: & \mu_1=\mu_2=\mu_3\\
 H_1: & \mu_1\neq \mu_2 \text{ ou }\mu_1\neq \mu_3 \text{ ou }\mu_2\neq \mu_3
 \end{align*}
-:::
+
 
 Sob alguns pressupostos, hipóteses deste tipo podem ser testadas utilizando a **análise de variância**, denominada **ANOVA** (do inglês: **an**alysis **o**f **va**riance), que discutimos a seguir.
 
@@ -59,7 +65,17 @@ Sob alguns pressupostos, hipóteses deste tipo podem ser testadas utilizando a *
 
 ## ANOVA
 
-Suponha que temos:
+Nesta seção, descrevemos como realizar análise de variância para o DIC. Dividimos esta seção em:
+
+- [Modelo estatístico]
+- [Pressupostos]
+- [Modelo de efeitos]
+- [Hipóteses]
+- [Por que analisar variância para comparar médias?] 
+
+Como estamos trabalhando apenas com um único fator, o que desenvolvemos nesta seção leva o nome **ANOVA _ONE-WAY_** ou, também, **ANOVA DE FATOR ÚNICO**.
+
+Para prosseguir, suponha que temos:
 
 - $a$ tratamentos (ou níveis de um fator)
 - $n$ repetições em cada tratamento
@@ -68,7 +84,7 @@ ou seja, estamos supondo que o DIC seja balanceado (mesmo número de repetiçõe
 
 <!-- ----------------------------------------------- -->
 
-### Modelo estatístico (médias)
+### Modelo estatístico
 
 Um modelo estatístico tem como objetivo descrever matematicamente um fenômeno aleatório do mundo real. Com isso, há suposições que são consideradas, uma vez que se trata de uma aproximação matemática da realidade.
 
@@ -87,9 +103,11 @@ em que:
 - $\mu_i$ é a média (populacional) do tratamento $i$
 - $\epsilon_{ij}$ é o  erro aleatório da observação $j$ do tratamento $i$ (incorpora todas as fontes de variação que vão além da variação entre os tratamentos)
 
-Este modelo nos diz que cada observação é igual a média populacional do respectivo tratamento mais um erro aleatório individual. Ou seja, na perspectiva *frequentista* estamos considerando que $\mu_i$ é uma quantidade numérica fixa da população, a "verdadeira média", porém, por se tratar de um **parâmetro**, é desconhecida e não observável.
+Este modelo nos diz que cada observação é igual a média populacional do respectivo tratamento mais um erro aleatório individual. 
 
-O componente aleatório deste modelo é o erro $\epsilon_{ij}$, que é individual, i.e. para cada observação $j$ do tratamento $i$. 
+Estamos considerando que $\mu_i$ é uma quantidade numérica fixa da população (a "verdadeira média"), porém, por se tratar de um **parâmetro**, é desconhecida e não observável e, além disso, é nela que temos interesse em fazer inferência.
+
+O componente aleatório deste modelo é o erro $\epsilon_{ij}$, que é individual, isto é, para cada observação $j$ de cada tratamento $i$. 
 
 ::: {.example}
 
@@ -107,28 +125,39 @@ y_{12}=\mu_1+\epsilon_{12} & \Leftrightarrow  31=30+1\\
 y_{13}=\mu_1+\epsilon_{13} & \Leftrightarrow  25=30+(-5)
 \end{align}
 
-_Note que, as médias populacionais, na prática, são desconhecidas. Temos acesso apenas as observações $y_{ij}$ e um dos objetivos da **inferência estatística** é, a partir das observações, estimar as médias populacionais. Uma estimativa "natural" para a média populacional é a média amostral._
+_Note que, as médias populacionais, na prática, são desconhecidas. Temos acesso apenas as observações $y_{ij}$ e realizar **inferência estatística** é, a partir destas observações, estimar as médias populacionais. Uma estimativa "natural" para a média populacional é a média amostral._
 
 _Os erros aleatórios também não são observáveis, uma vez que $\epsilon_{ij}=y_{ij}-\mu_i$. No exemplo, $\epsilon_{11}=-3, \epsilon_{12}=1 \text{ e } \epsilon_{13}=-5$._
 
+_Iremos definir e lidar com os resíduos do modelo em seção subsequente._
+<p style="text-align:right;">$\square$</p>
 :::
 
 <!-- ----------------------------------------------- -->
 
 ### Pressupostos {#pressupostos}
 
-Para dar seguimento com as análises estatísticas com a ANOVA, precisamos fazer algumas suposições com relação ao modelo estatístico apresentado, que são razoáveis em grande parte das aplicações.
+Para dar seguimento com as análises estatísticas, precisamos fazer algumas suposições com relação ao modelo estatístico apresentado, que são razoáveis em grande parte das aplicações.
 
 A principal suposição é que:
-$$\epsilon_{ij}\overset{ind}{\sim}N(0, \sigma^2)$$
-em que $i=1, 2, ..., a; j=1, 2, ..., n.$ Em outras palavras:
+\begin{equation}
+\epsilon_{ij}\overset{ind}{\sim}N(0, \sigma^2)
+(\#eq:pressuposto)
+\end{equation}
+em que $i=1, 2, ..., a; j=1, 2, ..., n.$ 
 
-1) **Os erros têm média zero**, i.e. $E(\epsilon_{ij})=0.$ Este pressuposto é relativamente intuitivo: as observações da variável resposta $y$ no tratamento $i$ são aleatórias em torno da respectiva média. 
-2) **Os erros têm distribuição normal**. Este pressuposto requer que a variável resposta seja aleatória com distribuição normal. O modelo estatístico nos diz que $y_{ij}=\mu_i+\epsilon_{ij}$ e como $\epsilon$ é normal, então $y$ também é. Logo, aplicar a ANOVA requer que a variável resposta $y$ seja normal. Isto se aplica a inúmeros exemplos e geralmente a variável resposta deve ser contínua, simétrica, com uma variabilidade razoável (sem muitos empates). Comprimento e peso são exemplo clássicos de aplicações.  Veremos como verificar os pressupostos em seção subsequente.
-3) **Os erros têm variâncias iguais** para todos os tratamentos, i.e. $\sigma^2_1=\sigma^2_1=\cdots =\sigma^2_a=\sigma^2$. Este pressuposto leva o nome de **homocedasticidade** (homogeneidade das variâncias).
+Lemos a expressão acima como: os erros são independentes e identicamente distribuídos, com distribuição normal com média zero e variância sigma dois".
+
+Vamos dividir tal suposição em 4 pressupostos do modelo:
+
+1) **Os erros têm média zero**, i.e. $E(\epsilon_{ij})=0.$ Este pressuposto é relativamente intuitivo: as observações da variável resposta $y$ no tratamento $i$ são aleatórias em torno da respectiva média.
+2) **Os erros têm distribuição normal**. Este pressuposto requer que a variável resposta seja aleatória com distribuição normal. O modelo   diz que $y_{ij}=\mu_i+\epsilon_{ij}$ e como $\epsilon$ é normal, então $y$ também é. Logo, é análogo supor que a variável resposta $y$ seja normal. Isto se aplica a inúmeros exemplos e geralmente a variável resposta deve ser contínua, simétrica, com uma variabilidade razoável (sem muitos empates). Comprimento e peso são exemplo clássicos de aplicações.  
+3) **Os erros têm variâncias iguais** para todos os tratamentos, i.e. $\sigma^2_1=\sigma^2_1=\cdots =\sigma^2_a=\sigma^2$. Este pressuposto leva o nome de **homocedasticidade** (homogeneidade das variâncias). Caso alguma variância seja diferente, dizemos que há **heretocedasticidade**.
 4) **Os erros são independentes**, i.e. as unidades experimentais devem ser independentes entre si. Em outras palavras, a observação de uma unidade não está associada a observação de outra unidade qualquer.
 
-A suposição acima poderia ser escrita por:
+Veremos como verificar os pressupostos em seção subsequente.
+
+A suposição da Equação \@ref(eq:pressuposto) é equivalente a:
 $$y_{ij}\overset{ind}{\sim}N(\mu_i, \sigma^2)$$
 em que $i=1, 2, ..., a; j=1, 2, ..., n,$ uma vez que
 \begin{align}
@@ -138,9 +167,9 @@ var(y_{ij})&=var(\mu_i+\epsilon_{ij})=var(\mu_i)+var(\epsilon_{ij})=0+\sigma^2=\
 
 <!-- ----------------------------------------------- -->
 
-### Modelo alternativo (efeitos)
+### Modelo de efeitos
 
-Uma maneira alternativa bastante utilizada e também intuitiva é o modelo de efeitos, definido abaixo.
+Um modelo alternativo para o DIC bastante utilizado é o modelo de efeitos.
 
 > O **modelo estatístico de efeitos do DIC** pode ser escrito por:
 \begin{equation}
@@ -152,24 +181,22 @@ em que i=1,2, ..., a; j=1, 2, ..., n; $y_{ij}$ e $\epsilon_{ij}$ são idênticos
 - $\mu$ é uma média (populacional) global;
 - $\tau_i$ é o efeito do tratamento $i$ (que pode ser positivo, negativo ou nulo).
 
-Este modelo é análogo ao modelo de médias, mas pode trazer interpretações diferentes:
+Este modelo é equivalente ao modelo de médias, mas pode trazer interpretações diferentes:
 
 - $\mu$ representa uma média geral, independente do tratamento
 - a média do tratamento $i$ pode ser escrita por $\mu_i=\mu+\tau_i$
 - o efeito $\tau_i$ é o que possivelmente diferencia a média de um tratamento do outro
-- se o efeito de $\tau_i$ é positivo, a média do tratamento $i$ está acima da média global; caso seja negativo, a média $\mu_i$ está abaixo de $\mu$; caso o efeito seja nulo, a média do tratamento é igual a média global
+- se o efeito de $\tau_i$ é positivo, a média do tratamento $i$ está acima da média global; caso seja negativo, a média $\mu_i$ está abaixo de $\mu$; caso o efeito seja nulo $\mu_i=\mu$
 - se todos os efeitos são nulos, então $\mu_i=\mu, i=1, 2, ..., a$, ou seja, $\mu_1=\mu_2=\cdots \mu_a=\mu$
 - os efeitos $\tau_i$ também são parâmetros e, portanto, temos interesse em fazer inferência, uma vez que são reponsáveis por diferenciar um tratamento do outro
-- é razoável considerar que $\tau_1+\tau_2+\cdots =\tau_a=0$, i.e. a soma dos efeitos é nula. Isto faz com que a média global $\mu$ seja uma média das médias populacionais (muita média em uma mesma frase, o que pode ser confuso), ou seja:
+- é razoável considerar que $\tau_1+\tau_2+\cdots =\tau_a=0$. Isto faz com que a média global $\mu$ seja uma média das médias populacionais (muita média em uma mesma frase, o que pode ser confuso), ou seja:
 $$\frac{1}{a}\sum_{i=1}^a\mu_i=\frac{1}{a}\sum_{i=1}^a(\mu+\tau_i)=\frac{1}{a} \left( \sum_{i=1}^a\mu+\sum_{i=1}^a\tau_i \right) =\frac{1}{a}a\mu+0=\mu$$
-
-Tanto o modelo de médias quanto o modelo de efeitos são conhecidos como **ANOVA _ONE-WAY_** ou como **ANOVA DE FATOR ÚNICO**.
 
 <!-- ----------------------------------------------- -->
 
 ### Hipóteses
 
-O modelo de médias nos diz que $y_{ij}=\mu_i+\epsilon_{ij}$. Os parâmetros que desejamos fazer inferência são as médias de cada tratamento. A hipótese a ser testada pela ANOVA é:
+O modelo de médias nos diz que $y_{ij}=\mu_i+\epsilon_{ij}$. Os parâmetros que desejamos fazer inferência são as médias de cada tratamento. Assim, a hipótese a ser testada pela ANOVA é:
 \begin{equation}
 \begin{split}
 H_0: & \mu_1=\mu_2=\cdots =\mu_a\\
@@ -178,15 +205,15 @@ H_1: & \mu_i\neq \mu_j, \text{ para algum } i\neq j
 (\#eq:hipanova)
 \end{equation}
 
-Note que, a hipótese alternativa nos diz que basta uma das médias ser diferente das demais que $H_0$ é falsa.
+Note que, a hipótese alternativa nos diz que basta uma das médias ser diferente das demais para que $H_0$ seja falsa.
 
-Ao utilizarmos o modelo de médias, note que:
+Note que:
 \begin{align}
 \mu_1=\mu_2=\cdots =\mu_a &\Leftrightarrow \mu+\tau_1=\mu+\tau_2=\cdots =\mu+\tau_a\\
 &\Leftrightarrow \tau_1=\tau_2=\cdots =\tau_a\\
 &\Leftrightarrow \tau_1=\tau_2=\cdots =\tau_a=0
 \end{align}
-Note que a terceira linha desta relação vem do fato que vimos anteriormente que $\tau_1+\tau_2+\cdots +\tau_a=0$ e se $\tau_1=\tau_2=\cdots =\tau_a$, a única possibilidade é que sejam todos iguais a zero.
+A terceira linha desta relação vem do fato que vimos anteriormente, que $\tau_1+\tau_2+\cdots +\tau_a=0$, e se $\tau_1=\tau_2=\cdots =\tau_a$, então a única possibilidade é $\tau_1=\tau_2=\cdots =\tau_a=0$.
 
 Dado isso, as hipóteses dadas pela Equação \@ref(eq:hipanova) são equivalentes a:
 \begin{equation}
@@ -212,11 +239,21 @@ em que:
 - $\bar{y}_1$ e $\bar{y_2}$ são as médias amostrais dos tratamentos 1 e 2, respectivamente
 - $S_1^2$ e $S_2^2$ são as variâncias amostrais dos tratamentos 1 e 2, respectivamente
 
-O importante neste momento é notar que o valor absoluto da estatística $t$ mede uma distância padronizada (pelo erro padrão $\sqrt{(S^2_1+S^2_2)/n}$) entre as médias amostrais. Em resumo, se $|t|$ for "muito" diferente de zero, isso significa que $\bar y_1$ está "muito" distante de $\bar y_2$, trazendo evidência contra $H_0$. Note que, com um nível de significância estipulado, determinamos o quantil (t tabelado) que nos dá um ponto de corte para considerar o que é $|t|$ ser "muito" diferente de zero, ou seja, se $|t| > t_{tab}$, temos evidência o suficiente para rejeitar $H_0$.
+O importante neste momento é notar que o valor absoluto da estatística $|t|$ mede uma distância padronizada entre as médias amostrais. 
+<details> <summary><span style="color:blue">Leia mais</span></summary>
 
-A pergunta que poderia surgir é, é possível medir uma "distância" entre 3 médias de tratamentos para concluir se há evidências o suficiente para rejeitar $H_0:\mu_1=\mu_2=\mu_3$?
+Em resumo, se $|t|$ for "muito" grande, isso significa que $\bar y_1$ está "muito" distante de $\bar y_2$, trazendo evidência contra $H_0:\mu_1=\mu_2$. 
 
-A resposta para esta pergunta não é tão trivial, mas está em analisar as variâncias. Considere o seguinte exemplo, para compreender o porque analisar variâncias é útil para comparar médias.
+Note que, com um nível de significância $\alpha$, determinamos o quantil (t tabelado), digamos $t_{\alpha,2n-2}$, que nos dá um ponto de corte para considerar o que queremos dizer com $|t|$ ser "muito" grande. Ou seja, se $|t| > t_{\alpha,2n-2}$, então $\bar{y}_1$ está longe o suficiente de $\bar{y}_2$, o que nos leva a crer (por meio de evidências) que $\mu_1\neq \mu_2$, nos levando a rejeitar $H_0$.
+
+<hr style="width:5%">
+</details>
+
+Pergunta: é possível medir uma distância entre 3 médias de tratamentos para concluir se há evidências o suficiente para rejeitar $H_0:\mu_1=\mu_2=\mu_3$, com um nível de significância $\alpha$?
+
+A resposta para esta pergunta não é tão trivial. Uma resposta está em analisar as variâncias. 
+
+Considere o seguinte exemplo, para compreender o porque analisar variâncias é útil para comparar médias de 3 ou mais tratamentos.
 
 ::: {.example} 
 <i>
@@ -289,7 +326,7 @@ p2 <- d2 |>
 gridExtra::grid.arrange(p1, p2, ncol=2)
 ```
 
-Podemos ver na Figura \@ref(fig:foo-1) que de fato o cenário A é diferente do B no que diz respeito às médias; no cenário A as médias amostrais dos tratamentos de 1 a 4 (primeiras 4 colunas) são bem diferentes e no cenário B são próximas. 
+Podemos ver na Figura \@ref(fig:foo-1) que de fato o cenário A é diferente do B no que diz respeito às médias; no cenário A as médias amostrais dos tratamentos de 1 a 4 (primeiras 4 colunas) são bem diferentes entre si e no cenário B são similares 
 
 Mas observe a dispersão (variância) em cada um dos 4 tratamentos. Em ambos os cenários as dispersões entre os tratamentos são similares entre si. Agora observe a dispersão do total (última coluna):
 
@@ -300,6 +337,11 @@ Isso nos leva a crer na seguinte afirmação:
 
 > se as variâncias dos tratamentos são diferentes da variância total dos dados, então as médias são diferentes entre si.
 
+</i>
+:::
+
+<i>
+<details> <summary><span style="color:blue">Leia mais</span></summary>
 Vamos colocar em termos numéricos estas diferenças. As variâncias amostrais de ambos os cenários são organizadas na tabela abaixo.
 ```{r echo=FALSE}
 vary <- d1 |> group_by(trat) |> summarise(sd(y)) |> select(2) |> as_vector()
@@ -329,8 +371,10 @@ No cenário A, esta medida é igual a `r round(1-(mean(tab[1,1:4])/tab[1,5]),1)`
 
 - no cenário A, 80% da variabilidade dos dados foi explicada pelos tratamentos, tornando os tratamentos um aspecto importante para explicar a variável resposta
 - no cenário B, 0% da variabilidade dos dados foi explicada pelos tratamenos, o que mostra a irrelevância dos tratamentos para explicar a variável respota
+<hr style="width:5%">
+</details>
+</i>
+<p style="text-align:right;">$\square$</p>
 
 Em subseção subsequente, construímos uma medida parecida com esta razão que terá distribuição F e, assim, podemos utilizar o teste F para analisar tais variâncias e concluir se há evidências favoráveis ou contrárias à igualdade das médias.
 </i>
-:::
-

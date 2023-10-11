@@ -23,7 +23,7 @@
 <meta name="author" content="Guaraci Requena" />
 
 
-<meta name="date" content="2023-10-10" />
+<meta name="date" content="2023-11-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -145,9 +145,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="1.1" data-path="dic.html"><a href="dic.html#anova"><i class="fa fa-check"></i><b>1.1</b> ANOVA</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="dic.html"><a href="dic.html#modelo-estatístico-médias"><i class="fa fa-check"></i><b>1.1.1</b> Modelo estatístico (médias)</a></li>
+<li class="chapter" data-level="1.1.1" data-path="dic.html"><a href="dic.html#modelo-estatístico"><i class="fa fa-check"></i><b>1.1.1</b> Modelo estatístico</a></li>
 <li class="chapter" data-level="1.1.2" data-path="dic.html"><a href="dic.html#pressupostos"><i class="fa fa-check"></i><b>1.1.2</b> Pressupostos</a></li>
-<li class="chapter" data-level="1.1.3" data-path="dic.html"><a href="dic.html#modelo-alternativo-efeitos"><i class="fa fa-check"></i><b>1.1.3</b> Modelo alternativo (efeitos)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="dic.html"><a href="dic.html#modelo-de-efeitos"><i class="fa fa-check"></i><b>1.1.3</b> Modelo de efeitos</a></li>
 <li class="chapter" data-level="1.1.4" data-path="dic.html"><a href="dic.html#hipóteses"><i class="fa fa-check"></i><b>1.1.4</b> Hipóteses</a></li>
 <li class="chapter" data-level="1.1.5" data-path="dic.html"><a href="dic.html#por-que-analisar-variância-para-comparar-médias"><i class="fa fa-check"></i><b>1.1.5</b> Por que analisar variância para comparar médias?</a></li>
 </ul></li>
@@ -177,13 +177,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="dic" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Capítulo 1</span> Delineamento Inteiramente Casualizado<a href="dic.html#dic" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>O <em>delineamento inteiramente casualizado (DIC)</em>, como visto anteriormente, é preferido quando as unidades experimentais são homogêneas entre si em suas principais características.</p>
+<p>O <em>delineamento inteiramente casualizado (DIC)</em>, como visto anteriormente, é preferido quando as unidades experimentais são homogêneas entre si em suas principais características (que podem influenciar na variável resposta).</p>
 <p>Tal delineamento se dá quando os tratamentos (ou níveis de um fator) são distribuídos <strong>totalmente ao acaso</strong> dentre as unidades experimentais.</p>
 <p>Veremos adiante que há diferentes esquemas para se construir tratamentos, como em experimentos fatoriais e em parcelas subdivididas, porém, neste capítulo, trabalhamos apenas com um fator.</p>
 <div class="example">
 <p><span id="exm:dic" class="example"><strong>Exemplo 1.1  </strong></span><em>Temos <span class="math inline">\(N=9\)</span> sementes de feijão e <span class="math inline">\(a=3\)</span> níveis de irrigação (A, B, C) e iremos medir o peso em gramas da planta, após determinado tempo.</em></p>
 <p><em>O DIC pode ser construido enumerando as sementes de 1 a 9 e sorteando aleatoriamente os tratamentos.</em></p>
 <p><em>É possível realizar este sorteio no R de diferentes maneiras. Uma delas é através da função <code>sample</code>.</em></p>
+</div>
+<details>
+<summary>
+<span style="color:blue">Código em R com resultado</span>
+</summary>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="dic.html#cb1-1" aria-hidden="true" tabindex="-1"></a>N<span class="ot">=</span><span class="dv">9</span> <span class="co">#n. de unidades experimentais</span></span>
 <span id="cb1-2"><a href="dic.html#cb1-2" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span><span class="dv">3</span> <span class="co">#n. de tratamentos</span></span>
 <span id="cb1-3"><a href="dic.html#cb1-3" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">3</span> <span class="co">#n. de repetições</span></span>
@@ -275,18 +280,31 @@ C
 </tr>
 </tbody>
 </table>
-<p><em>Neste exemplo, a pergunta que surge é: existe algum nível de irrigação (tratamento) que é melhor do que os demais? Em outras palavras: os tratamentos são diferentes entre si?</em></p>
-<p><em>Estatisticamente falando, estamos estabelecendo hipóteses nula e alternativa:</em>
+<hr style="width:5%">
+</details>
+<p style="text-align:right;">
+<span class="math inline">\(\square\)</span>
+</p>
+<p>Neste exemplo, a pergunta que surge é: existe algum nível de irrigação (tratamento) que é melhor do que os demais? Em outras palavras: os tratamentos são diferentes entre si?</p>
+<p>Estatisticamente falando, estamos estabelecendo hipóteses nula e alternativa:
 <span class="math display">\[\begin{align*}
 H_0: &amp; \mu_1=\mu_2=\mu_3\\
 H_1: &amp; \mu_1\neq \mu_2 \text{ ou }\mu_1\neq \mu_3 \text{ ou }\mu_2\neq \mu_3
 \end{align*}\]</span></p>
-</div>
 <p>Sob alguns pressupostos, hipóteses deste tipo podem ser testadas utilizando a <strong>análise de variância</strong>, denominada <strong>ANOVA</strong> (do inglês: <strong>an</strong>alysis <strong>o</strong>f <strong>va</strong>riance), que discutimos a seguir.</p>
 <!-- ------------------------------------------------------------ -->
 <div id="anova" class="section level2 hasAnchor" number="1.1">
 <h2><span class="header-section-number">1.1</span> ANOVA<a href="dic.html#anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Suponha que temos:</p>
+<p>Nesta seção, descrevemos como realizar análise de variância para o DIC. Dividimos esta seção em:</p>
+<ul>
+<li><a href="dic.html#modelo-estatístico">Modelo estatístico</a></li>
+<li><a href="dic.html#pressupostos">Pressupostos</a></li>
+<li><a href="dic.html#modelo-de-efeitos">Modelo de efeitos</a></li>
+<li><a href="dic.html#hipóteses">Hipóteses</a></li>
+<li><a href="dic.html#por-que-analisar-variância-para-comparar-médias">Por que analisar variância para comparar médias?</a></li>
+</ul>
+<p>Como estamos trabalhando apenas com um único fator, o que desenvolvemos nesta seção leva o nome <strong>ANOVA <em>ONE-WAY</em></strong> ou, também, <strong>ANOVA DE FATOR ÚNICO</strong>.</p>
+<p>Para prosseguir, suponha que temos:</p>
 <ul>
 <li><span class="math inline">\(a\)</span> tratamentos (ou níveis de um fator)</li>
 <li><span class="math inline">\(n\)</span> repetições em cada tratamento</li>
@@ -294,8 +312,8 @@ H_1: &amp; \mu_1\neq \mu_2 \text{ ou }\mu_1\neq \mu_3 \text{ ou }\mu_2\neq \mu_3
 ou seja, estamos supondo que o DIC seja balanceado (mesmo número de repetições em cada tratamento)</li>
 </ul>
 <!-- ----------------------------------------------- -->
-<div id="modelo-estatístico-médias" class="section level3 hasAnchor" number="1.1.1">
-<h3><span class="header-section-number">1.1.1</span> Modelo estatístico (médias)<a href="dic.html#modelo-estatístico-médias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="modelo-estatístico" class="section level3 hasAnchor" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Modelo estatístico<a href="dic.html#modelo-estatístico" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Um modelo estatístico tem como objetivo descrever matematicamente um fenômeno aleatório do mundo real. Com isso, há suposições que são consideradas, uma vez que se trata de uma aproximação matemática da realidade.</p>
 <p>“A realidade é muito mais complexa do que qualquer modelo matemático.”</p>
 <blockquote>
@@ -313,8 +331,9 @@ em que:</p>
 <li><span class="math inline">\(\epsilon_{ij}\)</span> é o erro aleatório da observação <span class="math inline">\(j\)</span> do tratamento <span class="math inline">\(i\)</span> (incorpora todas as fontes de variação que vão além da variação entre os tratamentos)</li>
 </ul>
 </blockquote>
-<p>Este modelo nos diz que cada observação é igual a média populacional do respectivo tratamento mais um erro aleatório individual. Ou seja, na perspectiva <em>frequentista</em> estamos considerando que <span class="math inline">\(\mu_i\)</span> é uma quantidade numérica fixa da população, a “verdadeira média”, porém, por se tratar de um <strong>parâmetro</strong>, é desconhecida e não observável.</p>
-<p>O componente aleatório deste modelo é o erro <span class="math inline">\(\epsilon_{ij}\)</span>, que é individual, i.e. para cada observação <span class="math inline">\(j\)</span> do tratamento <span class="math inline">\(i\)</span>.</p>
+<p>Este modelo nos diz que cada observação é igual a média populacional do respectivo tratamento mais um erro aleatório individual.</p>
+<p>Estamos considerando que <span class="math inline">\(\mu_i\)</span> é uma quantidade numérica fixa da população (a “verdadeira média”), porém, por se tratar de um <strong>parâmetro</strong>, é desconhecida e não observável e, além disso, é nela que temos interesse em fazer inferência.</p>
+<p>O componente aleatório deste modelo é o erro <span class="math inline">\(\epsilon_{ij}\)</span>, que é individual, isto é, para cada observação <span class="math inline">\(j\)</span> de cada tratamento <span class="math inline">\(i\)</span>.</p>
 <div class="example">
 <p><span id="exm:unlabeled-div-1" class="example"><strong>Exemplo 1.2  </strong></span><em>Utilizando o Exemplo <a href="dic.html#exm:dic">1.1</a>, vamos supor, hipoteticamente, que você consultou um oráculo e sabe as médias populacionais dos <span class="math inline">\(a=3\)</span> níveis de irrigação. Considere que são:</em>
 <span class="math display">\[\begin{align}
@@ -328,24 +347,35 @@ y_{11}=\mu_1+\epsilon_{11} &amp; \Leftrightarrow  33=30+(-3)\\
 y_{12}=\mu_1+\epsilon_{12} &amp; \Leftrightarrow  31=30+1\\
 y_{13}=\mu_1+\epsilon_{13} &amp; \Leftrightarrow  25=30+(-5)
 \end{align}\]</span></p>
-<p><em>Note que, as médias populacionais, na prática, são desconhecidas. Temos acesso apenas as observações <span class="math inline">\(y_{ij}\)</span> e um dos objetivos da <strong>inferência estatística</strong> é, a partir das observações, estimar as médias populacionais. Uma estimativa “natural” para a média populacional é a média amostral.</em></p>
+<p><em>Note que, as médias populacionais, na prática, são desconhecidas. Temos acesso apenas as observações <span class="math inline">\(y_{ij}\)</span> e realizar <strong>inferência estatística</strong> é, a partir destas observações, estimar as médias populacionais. Uma estimativa “natural” para a média populacional é a média amostral.</em></p>
 <p><em>Os erros aleatórios também não são observáveis, uma vez que <span class="math inline">\(\epsilon_{ij}=y_{ij}-\mu_i\)</span>. No exemplo, <span class="math inline">\(\epsilon_{11}=-3, \epsilon_{12}=1 \text{ e } \epsilon_{13}=-5\)</span>.</em></p>
+<em>Iremos definir e lidar com os resíduos do modelo em seção subsequente.</em>
+<p style="text-align:right;">
+<span class="math inline">\(\square\)</span>
+</p>
 </div>
 <!-- ----------------------------------------------- -->
 </div>
 <div id="pressupostos" class="section level3 hasAnchor" number="1.1.2">
 <h3><span class="header-section-number">1.1.2</span> Pressupostos<a href="dic.html#pressupostos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Para dar seguimento com as análises estatísticas com a ANOVA, precisamos fazer algumas suposições com relação ao modelo estatístico apresentado, que são razoáveis em grande parte das aplicações.</p>
+<p>Para dar seguimento com as análises estatísticas, precisamos fazer algumas suposições com relação ao modelo estatístico apresentado, que são razoáveis em grande parte das aplicações.</p>
 <p>A principal suposição é que:
-<span class="math display">\[\epsilon_{ij}\overset{ind}{\sim}N(0, \sigma^2)\]</span>
-em que <span class="math inline">\(i=1, 2, ..., a; j=1, 2, ..., n.\)</span> Em outras palavras:</p>
+<span class="math display" id="eq:pressuposto">\[\begin{equation}
+\epsilon_{ij}\overset{ind}{\sim}N(0, \sigma^2)
+\tag{1.2}
+\end{equation}\]</span>
+em que <span class="math inline">\(i=1, 2, ..., a; j=1, 2, ..., n.\)</span></p>
+<p>Lemos a expressão acima como: os erros são independentes e identicamente distribuídos, com distribuição normal com média zero e variância sigma dois”.</p>
+<p>Vamos dividir tal suposição em 4 pressupostos do modelo:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Os erros têm média zero</strong>, i.e. <span class="math inline">\(E(\epsilon_{ij})=0.\)</span> Este pressuposto é relativamente intuitivo: as observações da variável resposta <span class="math inline">\(y\)</span> no tratamento <span class="math inline">\(i\)</span> são aleatórias em torno da respectiva média.</li>
-<li><strong>Os erros têm distribuição normal</strong>. Este pressuposto requer que a variável resposta seja aleatória com distribuição normal. O modelo estatístico nos diz que <span class="math inline">\(y_{ij}=\mu_i+\epsilon_{ij}\)</span> e como <span class="math inline">\(\epsilon\)</span> é normal, então <span class="math inline">\(y\)</span> também é. Logo, aplicar a ANOVA requer que a variável resposta <span class="math inline">\(y\)</span> seja normal. Isto se aplica a inúmeros exemplos e geralmente a variável resposta deve ser contínua, simétrica, com uma variabilidade razoável (sem muitos empates). Comprimento e peso são exemplo clássicos de aplicações. Veremos como verificar os pressupostos em seção subsequente.</li>
-<li><strong>Os erros têm variâncias iguais</strong> para todos os tratamentos, i.e. <span class="math inline">\(\sigma^2_1=\sigma^2_1=\cdots =\sigma^2_a=\sigma^2\)</span>. Este pressuposto leva o nome de <strong>homocedasticidade</strong> (homogeneidade das variâncias).</li>
+<li><strong>Os erros têm distribuição normal</strong>. Este pressuposto requer que a variável resposta seja aleatória com distribuição normal. O modelo diz que <span class="math inline">\(y_{ij}=\mu_i+\epsilon_{ij}\)</span> e como <span class="math inline">\(\epsilon\)</span> é normal, então <span class="math inline">\(y\)</span> também é. Logo, é análogo supor que a variável resposta <span class="math inline">\(y\)</span> seja normal. Isto se aplica a inúmeros exemplos e geralmente a variável resposta deve ser contínua, simétrica, com uma variabilidade razoável (sem muitos empates). Comprimento e peso são exemplo clássicos de aplicações.<br />
+</li>
+<li><strong>Os erros têm variâncias iguais</strong> para todos os tratamentos, i.e. <span class="math inline">\(\sigma^2_1=\sigma^2_1=\cdots =\sigma^2_a=\sigma^2\)</span>. Este pressuposto leva o nome de <strong>homocedasticidade</strong> (homogeneidade das variâncias). Caso alguma variância seja diferente, dizemos que há <strong>heretocedasticidade</strong>.</li>
 <li><strong>Os erros são independentes</strong>, i.e. as unidades experimentais devem ser independentes entre si. Em outras palavras, a observação de uma unidade não está associada a observação de outra unidade qualquer.</li>
 </ol>
-<p>A suposição acima poderia ser escrita por:
+<p>Veremos como verificar os pressupostos em seção subsequente.</p>
+<p>A suposição da Equação <a href="dic.html#eq:pressuposto">(1.2)</a> é equivalente a:
 <span class="math display">\[y_{ij}\overset{ind}{\sim}N(\mu_i, \sigma^2)\]</span>
 em que <span class="math inline">\(i=1, 2, ..., a; j=1, 2, ..., n,\)</span> uma vez que
 <span class="math display">\[\begin{align}
@@ -354,14 +384,14 @@ var(y_{ij})&amp;=var(\mu_i+\epsilon_{ij})=var(\mu_i)+var(\epsilon_{ij})=0+\sigma
 \end{align}\]</span></p>
 <!-- ----------------------------------------------- -->
 </div>
-<div id="modelo-alternativo-efeitos" class="section level3 hasAnchor" number="1.1.3">
-<h3><span class="header-section-number">1.1.3</span> Modelo alternativo (efeitos)<a href="dic.html#modelo-alternativo-efeitos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Uma maneira alternativa bastante utilizada e também intuitiva é o modelo de efeitos, definido abaixo.</p>
+<div id="modelo-de-efeitos" class="section level3 hasAnchor" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Modelo de efeitos<a href="dic.html#modelo-de-efeitos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Um modelo alternativo para o DIC bastante utilizado é o modelo de efeitos.</p>
 <blockquote>
 <p>O <strong>modelo estatístico de efeitos do DIC</strong> pode ser escrito por:
 <span class="math display" id="eq:modelodic2">\[\begin{equation}
 y_{ij}=\mu+\tau_i+\epsilon_{ij}
-\tag{1.2}
+\tag{1.3}
 \end{equation}\]</span>
 em que i=1,2, …, a; j=1, 2, …, n; <span class="math inline">\(y_{ij}\)</span> e <span class="math inline">\(\epsilon_{ij}\)</span> são idênticos ao modelo de médias <a href="dic.html#eq:modelodic">(1.1)</a>; e:</p>
 <ul>
@@ -369,39 +399,38 @@ em que i=1,2, …, a; j=1, 2, …, n; <span class="math inline">\(y_{ij}\)</span
 <li><span class="math inline">\(\tau_i\)</span> é o efeito do tratamento <span class="math inline">\(i\)</span> (que pode ser positivo, negativo ou nulo).</li>
 </ul>
 </blockquote>
-<p>Este modelo é análogo ao modelo de médias, mas pode trazer interpretações diferentes:</p>
+<p>Este modelo é equivalente ao modelo de médias, mas pode trazer interpretações diferentes:</p>
 <ul>
 <li><span class="math inline">\(\mu\)</span> representa uma média geral, independente do tratamento</li>
 <li>a média do tratamento <span class="math inline">\(i\)</span> pode ser escrita por <span class="math inline">\(\mu_i=\mu+\tau_i\)</span></li>
 <li>o efeito <span class="math inline">\(\tau_i\)</span> é o que possivelmente diferencia a média de um tratamento do outro</li>
-<li>se o efeito de <span class="math inline">\(\tau_i\)</span> é positivo, a média do tratamento <span class="math inline">\(i\)</span> está acima da média global; caso seja negativo, a média <span class="math inline">\(\mu_i\)</span> está abaixo de <span class="math inline">\(\mu\)</span>; caso o efeito seja nulo, a média do tratamento é igual a média global</li>
+<li>se o efeito de <span class="math inline">\(\tau_i\)</span> é positivo, a média do tratamento <span class="math inline">\(i\)</span> está acima da média global; caso seja negativo, a média <span class="math inline">\(\mu_i\)</span> está abaixo de <span class="math inline">\(\mu\)</span>; caso o efeito seja nulo <span class="math inline">\(\mu_i=\mu\)</span></li>
 <li>se todos os efeitos são nulos, então <span class="math inline">\(\mu_i=\mu, i=1, 2, ..., a\)</span>, ou seja, <span class="math inline">\(\mu_1=\mu_2=\cdots \mu_a=\mu\)</span></li>
 <li>os efeitos <span class="math inline">\(\tau_i\)</span> também são parâmetros e, portanto, temos interesse em fazer inferência, uma vez que são reponsáveis por diferenciar um tratamento do outro</li>
-<li>é razoável considerar que <span class="math inline">\(\tau_1+\tau_2+\cdots =\tau_a=0\)</span>, i.e. a soma dos efeitos é nula. Isto faz com que a média global <span class="math inline">\(\mu\)</span> seja uma média das médias populacionais (muita média em uma mesma frase, o que pode ser confuso), ou seja:
+<li>é razoável considerar que <span class="math inline">\(\tau_1+\tau_2+\cdots =\tau_a=0\)</span>. Isto faz com que a média global <span class="math inline">\(\mu\)</span> seja uma média das médias populacionais (muita média em uma mesma frase, o que pode ser confuso), ou seja:
 <span class="math display">\[\frac{1}{a}\sum_{i=1}^a\mu_i=\frac{1}{a}\sum_{i=1}^a(\mu+\tau_i)=\frac{1}{a} \left( \sum_{i=1}^a\mu+\sum_{i=1}^a\tau_i \right) =\frac{1}{a}a\mu+0=\mu\]</span></li>
 </ul>
-<p>Tanto o modelo de médias quanto o modelo de efeitos são conhecidos como <strong>ANOVA <em>ONE-WAY</em></strong> ou como <strong>ANOVA DE FATOR ÚNICO</strong>.</p>
 <!-- ----------------------------------------------- -->
 </div>
 <div id="hipóteses" class="section level3 hasAnchor" number="1.1.4">
 <h3><span class="header-section-number">1.1.4</span> Hipóteses<a href="dic.html#hipóteses" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>O modelo de médias nos diz que <span class="math inline">\(y_{ij}=\mu_i+\epsilon_{ij}\)</span>. Os parâmetros que desejamos fazer inferência são as médias de cada tratamento. A hipótese a ser testada pela ANOVA é:
+<p>O modelo de médias nos diz que <span class="math inline">\(y_{ij}=\mu_i+\epsilon_{ij}\)</span>. Os parâmetros que desejamos fazer inferência são as médias de cada tratamento. Assim, a hipótese a ser testada pela ANOVA é:
 <span class="math display" id="eq:hipanova">\[\begin{equation}
 \begin{split}
 H_0: &amp; \mu_1=\mu_2=\cdots =\mu_a\\
 H_1: &amp; \mu_i\neq \mu_j, \text{ para algum } i\neq j
 \end{split}
-\tag{1.3}
+\tag{1.4}
 \end{equation}\]</span></p>
-<p>Note que, a hipótese alternativa nos diz que basta uma das médias ser diferente das demais que <span class="math inline">\(H_0\)</span> é falsa.</p>
-<p>Ao utilizarmos o modelo de médias, note que:
+<p>Note que, a hipótese alternativa nos diz que basta uma das médias ser diferente das demais para que <span class="math inline">\(H_0\)</span> seja falsa.</p>
+<p>Note que:
 <span class="math display">\[\begin{align}
 \mu_1=\mu_2=\cdots =\mu_a &amp;\Leftrightarrow \mu+\tau_1=\mu+\tau_2=\cdots =\mu+\tau_a\\
 &amp;\Leftrightarrow \tau_1=\tau_2=\cdots =\tau_a\\
 &amp;\Leftrightarrow \tau_1=\tau_2=\cdots =\tau_a=0
 \end{align}\]</span>
-Note que a terceira linha desta relação vem do fato que vimos anteriormente que <span class="math inline">\(\tau_1+\tau_2+\cdots +\tau_a=0\)</span> e se <span class="math inline">\(\tau_1=\tau_2=\cdots =\tau_a\)</span>, a única possibilidade é que sejam todos iguais a zero.</p>
-<p>Dado isso, as hipóteses dadas pela Equação <a href="dic.html#eq:hipanova">(1.3)</a> são equivalentes a:
+A terceira linha desta relação vem do fato que vimos anteriormente, que <span class="math inline">\(\tau_1+\tau_2+\cdots +\tau_a=0\)</span>, e se <span class="math inline">\(\tau_1=\tau_2=\cdots =\tau_a\)</span>, então a única possibilidade é <span class="math inline">\(\tau_1=\tau_2=\cdots =\tau_a=0\)</span>.</p>
+<p>Dado isso, as hipóteses dadas pela Equação <a href="dic.html#eq:hipanova">(1.4)</a> são equivalentes a:
 <span class="math display">\[\begin{equation}
 \begin{split}
 H_0: &amp; \tau_1=\tau_2=\cdots =\tau_a=0\\
@@ -423,9 +452,18 @@ em que:</p>
 <li><span class="math inline">\(\bar{y}_1\)</span> e <span class="math inline">\(\bar{y_2}\)</span> são as médias amostrais dos tratamentos 1 e 2, respectivamente</li>
 <li><span class="math inline">\(S_1^2\)</span> e <span class="math inline">\(S_2^2\)</span> são as variâncias amostrais dos tratamentos 1 e 2, respectivamente</li>
 </ul>
-<p>O importante neste momento é notar que o valor absoluto da estatística <span class="math inline">\(t\)</span> mede uma distância padronizada (pelo erro padrão <span class="math inline">\(\sqrt{(S^2_1+S^2_2)/n}\)</span>) entre as médias amostrais. Em resumo, se <span class="math inline">\(|t|\)</span> for “muito” diferente de zero, isso significa que <span class="math inline">\(\bar y_1\)</span> está “muito” distante de <span class="math inline">\(\bar y_2\)</span>, trazendo evidência contra <span class="math inline">\(H_0\)</span>. Note que, com um nível de significância estipulado, determinamos o quantil (t tabelado) que nos dá um ponto de corte para considerar o que é <span class="math inline">\(|t|\)</span> ser “muito” diferente de zero, ou seja, se <span class="math inline">\(|t| &gt; t_{tab}\)</span>, temos evidência o suficiente para rejeitar <span class="math inline">\(H_0\)</span>.</p>
-<p>A pergunta que poderia surgir é, é possível medir uma “distância” entre 3 médias de tratamentos para concluir se há evidências o suficiente para rejeitar <span class="math inline">\(H_0:\mu_1=\mu_2=\mu_3\)</span>?</p>
-<p>A resposta para esta pergunta não é tão trivial, mas está em analisar as variâncias. Considere o seguinte exemplo, para compreender o porque analisar variâncias é útil para comparar médias.</p>
+O importante neste momento é notar que o valor absoluto da estatística <span class="math inline">\(|t|\)</span> mede uma distância padronizada entre as médias amostrais.
+<details>
+<summary>
+<span style="color:blue">Leia mais</span>
+</summary>
+<p>Em resumo, se <span class="math inline">\(|t|\)</span> for “muito” grande, isso significa que <span class="math inline">\(\bar y_1\)</span> está “muito” distante de <span class="math inline">\(\bar y_2\)</span>, trazendo evidência contra <span class="math inline">\(H_0:\mu_1=\mu_2\)</span>.</p>
+<p>Note que, com um nível de significância <span class="math inline">\(\alpha\)</span>, determinamos o quantil (t tabelado), digamos <span class="math inline">\(t_{\alpha,2n-2}\)</span>, que nos dá um ponto de corte para considerar o que queremos dizer com <span class="math inline">\(|t|\)</span> ser “muito” grande. Ou seja, se <span class="math inline">\(|t| &gt; t_{\alpha,2n-2}\)</span>, então <span class="math inline">\(\bar{y}_1\)</span> está longe o suficiente de <span class="math inline">\(\bar{y}_2\)</span>, o que nos leva a crer (por meio de evidências) que <span class="math inline">\(\mu_1\neq \mu_2\)</span>, nos levando a rejeitar <span class="math inline">\(H_0\)</span>.</p>
+<hr style="width:5%">
+</details>
+<p>Pergunta: é possível medir uma distância entre 3 médias de tratamentos para concluir se há evidências o suficiente para rejeitar <span class="math inline">\(H_0:\mu_1=\mu_2=\mu_3\)</span>, com um nível de significância <span class="math inline">\(\alpha\)</span>?</p>
+<p>A resposta para esta pergunta não é tão trivial. Uma resposta está em analisar as variâncias.</p>
+<p>Considere o seguinte exemplo, para compreender o porque analisar variâncias é útil para comparar médias de 3 ou mais tratamentos.</p>
 <div class="example">
 <p><span id="exm:unlabeled-div-2" class="example"><strong>Exemplo 1.3  </strong></span><i>
 Considere dois cenários, ambos com <span class="math inline">\(a=4\)</span> tratamentos e <span class="math inline">\(n=10\)</span> repetições em cada tratamento, totalizando <span class="math inline">\(N=40\)</span> unidades experimentais.</p>
@@ -442,7 +480,7 @@ Considere dois cenários, ambos com <span class="math inline">\(a=4\)</span> tra
 Figura 1.1: Gráfico de dispersão dos cenários A e B, respectivamente. O ponto vermelho representa a média amostral em cada tratamento. A última coluna representa todos os dados, independente do tratamento.
 </p>
 </div>
-<p>Podemos ver na Figura <a href="dic.html#fig:foo-1">1.1</a> que de fato o cenário A é diferente do B no que diz respeito às médias; no cenário A as médias amostrais dos tratamentos de 1 a 4 (primeiras 4 colunas) são bem diferentes e no cenário B são próximas.</p>
+<p>Podemos ver na Figura <a href="dic.html#fig:foo-1">1.1</a> que de fato o cenário A é diferente do B no que diz respeito às médias; no cenário A as médias amostrais dos tratamentos de 1 a 4 (primeiras 4 colunas) são bem diferentes entre si e no cenário B são similares</p>
 <p>Mas observe a dispersão (variância) em cada um dos 4 tratamentos. Em ambos os cenários as dispersões entre os tratamentos são similares entre si. Agora observe a dispersão do total (última coluna):</p>
 <ul>
 <li>no cenário A, as dispersões dos tratamentos são <strong>diferentes</strong> da dispersão total</li>
@@ -452,6 +490,13 @@ Figura 1.1: Gráfico de dispersão dos cenários A e B, respectivamente. O ponto
 <blockquote>
 <p>se as variâncias dos tratamentos são diferentes da variância total dos dados, então as médias são diferentes entre si.</p>
 </blockquote>
+<p></i></p>
+</div>
+<i>
+<details>
+<summary>
+<span style="color:blue">Leia mais</span>
+</summary>
 Vamos colocar em termos numéricos estas diferenças. As variâncias amostrais de ambos os cenários são organizadas na tabela abaixo.
 <table>
 <thead>
@@ -532,11 +577,16 @@ Em outras palavras, o <span class="math inline">\(R^2\)</span> mede o quanto a v
 <p>No cenário A, esta medida é igual a 0.8 e no cenário B é igual a 0. Podemos interpretar da seguinte maneira:</p>
 <ul>
 <li>no cenário A, 80% da variabilidade dos dados foi explicada pelos tratamentos, tornando os tratamentos um aspecto importante para explicar a variável resposta</li>
-<li>no cenário B, 0% da variabilidade dos dados foi explicada pelos tratamenos, o que mostra a irrelevância dos tratamentos para explicar a variável respota</li>
+<li>no cenário B, 0% da variabilidade dos dados foi explicada pelos tratamenos, o que mostra a irrelevância dos tratamentos para explicar a variável respota
+<hr style="width:5%"></li>
 </ul>
+</details>
+</i>
+<p style="text-align:right;">
+<span class="math inline">\(\square\)</span>
+</p>
 <p>Em subseção subsequente, construímos uma medida parecida com esta razão que terá distribuição F e, assim, podemos utilizar o teste F para analisar tais variâncias e concluir se há evidências favoráveis ou contrárias à igualdade das médias.
 </i></p>
-</div>
 
 <!-- # Literature -->
 <!-- Here is a review of existing methods. -->

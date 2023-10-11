@@ -15,7 +15,17 @@ description: "Aqui são encontradas algumas notas de aulas da disciplina MAF 261
 # Prefácio {-}
 
 <!-- 
+1 - Para adicionar, fazer o commit e enviar para o github
 git add . && git commit -m"update book" && git push origin master 
+
+2 - Para recuar algum texto opcional
+<details> <summary><span style="color:blue">Leia mais</span></summary>
+text
+<hr style="width:5%">
+</details>
+
+3 - Para finalizar exemplos com um quadrado vazio à direita
+<p style="text-align:right;">$\square$</p>
 -->
 
 ```{r, echo=FALSE}
