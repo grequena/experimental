@@ -378,3 +378,135 @@ No cenário A, esta medida é igual a `r round(1-(mean(tab[1,1:4])/tab[1,5]),1)`
 
 Em subseção subsequente, construímos uma medida parecida com esta razão que terá distribuição F e, assim, podemos utilizar o teste F para analisar tais variâncias e concluir se há evidências favoráveis ou contrárias à igualdade das médias.
 </i>
+
+
+<!-- ----------------------------------------------- -->
+
+### Soma de quadrados
+
+A principal ideia da ANOVA é particionar a variabilidade total dos dados em diferentes fontes de variação. No caso do DIC, há apenas duas possíveis, os **tratamentos** e o **erro**, que variabilidades naturais das unidades experimentais e de outros fatores não controlados.
+
+Para compreender tal partição, considere a notação a seguir. Considere que a tabela abaixo representa as observações da variável resposta $y$.
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-baqh{text-align:center;vertical-align:top}
+.tg .tg-amwm{font-weight:bold;text-align:center;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-amwm"></th>
+    <th class="tg-amwm" colspan="4">Repetições</th>
+    <th class="tg-amwm"></th>
+    <th class="tg-amwm"></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-amwm">Tratamento</td>
+    <td class="tg-amwm">1</td>
+    <td class="tg-amwm">2</td>
+    <td class="tg-amwm">$\cdots$</td>
+    <td class="tg-amwm">n</td>
+    <td class="tg-amwm">Totais</td>
+    <td class="tg-amwm">Médias</td>
+  </tr>
+  <tr>
+    <td class="tg-amwm">1</td>
+    <td class="tg-baqh">$y_{11}$</td>
+    <td class="tg-baqh">$y_{12}$</td>
+    <td class="tg-baqh">$\cdots$</td>
+    <td class="tg-baqh">$y_{1n}$</td>
+    <td class="tg-baqh">$y_{1\cdot}$</td>
+    <td class="tg-baqh">$\overline{y}_{1\cdot}$</td>
+  </tr>
+  <tr>
+    <td class="tg-amwm">2</td>
+    <td class="tg-baqh">$y_{21}$</td>
+    <td class="tg-baqh">$y_{22}$</td>
+    <td class="tg-baqh">$\cdots$</td>
+    <td class="tg-baqh">$y_{2n}$</td>
+    <td class="tg-baqh">$y_{2\cdot}$</td>
+    <td class="tg-baqh">$\overline{y}_{2\cdot}$</td>
+  </tr>
+  <tr>
+    <td class="tg-amwm">$\vdots$</td>
+    <td class="tg-baqh">$\vdots$</td>
+    <td class="tg-baqh">$\vdots$</td>
+    <td class="tg-baqh">$\cdots$</td>
+    <td class="tg-baqh">$\vdots$</td>
+    <td class="tg-baqh">$\vdots$</td>
+    <td class="tg-baqh">$\vdots$</td>
+  </tr>
+  <tr>
+    <td class="tg-amwm">a</td>
+    <td class="tg-baqh">$y_{a1}$</td>
+    <td class="tg-baqh">$y_{a2}$</td>
+    <td class="tg-baqh">$\cdots$</td>
+    <td class="tg-baqh">$y_{an}$</td>
+    <td class="tg-baqh">$y_{a\cdot}$</td>
+    <td class="tg-baqh">$\overline{y}_{a\cdot}$</td>
+  </tr>
+</tbody>
+</table>
+
+Isto é:
+
+\begin{align}
+y_{i\cdot}&=\text{ soma das obs. no trat. i }=\sum_{j=1}^ny_{ij}\\
+\overline{y}_{i\cdot}&=\text{ média das obs. no trat. i }=\frac{y_{i\cdot}}{n}\\
+y_{\cdot\cdot}&=\text{ soma de todas as obs. }=\sum_{i=1}^a\sum_{j=1}^ny_{ij}\\
+\overline{y}_{\cdot\cdot}&=\text{ média de todas as obs.}=\frac{y_{\cdot\cdot}}{N},\text{ em que }N=na
+\end{align}
+
+**Decomposição da soma de quadrados total**
+
+> Definimos a soma de quadrados total $SQ_T$ como
+\begin{equation}
+  SQ_T=\sum_{i=1}^a\sum_{j=1}^n(y_{ij}-\overline{y}_{\cdot\cdot})^2
+  (\#eq:sqt)
+\end{equation}
+e dizemos que tal soma tem $N-1$ graus de liberdade.
+
+É importante notar que $SQ_T$ pode ser utilizada como uma medida de variabilidade total nos dados, uma vez que a variância amostral pode ser estimada por 
+$$S^2=\frac{\sum_{i=1}^a\sum_{j=1}^n(y_{ij}-\overline{y}_{\cdot\cdot})^2}{N-1}=\frac{SQ_T}{N-1}$$
+
+Vamos decompor $SQ_T$:
+\begin{equation}
+\begin{split}
+  \sum_{i=1}^a\sum_{j=1}^n(y_{ij}-\overline{y}_{\cdot\cdot})^2&=&
+    \sum_{i=1}^a\sum_{j=1}^n\left[(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})+(y_{ij}-\overline{y}_{i\cdot})\right]^2\\
+    &=&\sum_{i=1}^a\sum_{j=1}^n(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})^2+\sum_{i=1}^a\sum_{j=1}^n(y_{ij}-\overline{y}_{i\cdot})^2\\
+    &&+\sum_{i=1}^a\sum_{j=1}^n2(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})(y_{ij}-\overline{y}_{i\cdot})\\
+    &=&n\sum_{i=1}^a(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})^2+\sum_{i=1}^a\sum_{j=1}^n(y_{ij}-\overline{y}_{i\cdot})^2
+\end{split}
+(\#eq:decompSQ)
+\end{equation} 
+
+- na primeira igualdade, somamos e subtraímos $\overline{y}_{i\cdot}$
+- da primeira para a segunda linha, desenvolvemos o quadrado
+- da segunda para a última linha, o termo $(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})$ não depende de $j$ e podemos somar em $j$, obtendo $n(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})$
+- ainda da segunda para a última linha, o último termo é igual a zero, como mostramos a seguir:
+\begin{align}
+\sum_{i=1}^a\sum_{j=1}^n2(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})(y_{ij}-\overline{y}_{i\cdot}) &=                 2\sum_{i=1}^a(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})\sum_{j=1}^n(y_{ij}-\overline{y}_{i\cdot})\\
+    &=2\sum_{i=1}^a\left\{(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})\left[\sum_{j=1}^ny_{ij}-\sum_{j=1}^n\overline{y}_{i\cdot})\right]\right\}\\
+    &=2\sum_{i=1}^a\left\{(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})\left[y_{i\cdot}-n\overline{y}_{i\cdot}\right]\right\}\\
+    &=2\sum_{i=1}^a\left\{(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})\left[y_{i\cdot}-y_{i\cdot}\right]\right\}=0
+\end{align}
+
+A decomposição da soma de quadrados total em \@ref(eq:decompSQ) pode ser escrita por
+\begin{equation}
+    SQ_T=SQ_{trat}+SQ_{E}
+    (\#eq:fundanova)
+\end{equation}
+em que
+
+- $SQ_{trat}=n\sum_i(\overline{y}_{i\cdot}-\overline{y}_{\cdot\cdot})^2$
+- $SQ_E=\sum_i\sum_j(y_{ij}-\overline{y}_{i\cdot})^2$
+
+

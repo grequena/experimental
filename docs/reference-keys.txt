@@ -41,3 +41,7 @@ fig:foo-1
 eq:pressuposto
 modelo-estatístico
 modelo-de-efeitos
+soma-de-quadrados
+eq:sqt
+eq:decompSQ
+eq:fundanova
